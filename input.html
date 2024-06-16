@@ -1,0 +1,217 @@
+<style>
+    body {
+        background: #3330;
+    }
+    .box {
+        position: absolute;
+        left: 20px;
+    }
+    .button_A, .button_B, .button_X, .button_Y, .button_Zl, .button_Zr, .button_L, .button_R, .stick_l, .stick_r {
+        /* background: red; */
+        display: block;
+        position: absolute;
+        border: 5px solid black;
+    }
+    .button_A, .button_B, .button_Y, .button_X {
+        border-radius: 30px;
+        width: 40px;
+        height: 40px;
+        border: 5px solid black;
+    }
+    .stick_l {
+        width: 120px;
+        height: 120px;
+        border-radius: 1200px;
+        top: 10px;
+        left: 60px;
+        border-color: #ddd;
+    }
+    .stick_l_inner, .stick_r_inner{
+        position: absolute;
+        left: 30px;
+        top: 30px;
+        width: 60px;
+        height: 60px;
+        display: block;
+        background: #ddd;
+        border-radius: 60px;
+    }
+    .stick_r_inner {
+        background: #fc4;
+
+    }
+    .stick_r {
+        border-color: #fc4;
+        width: 120px;
+        height: 120px;
+        border-radius: 1200px;
+        top: 10px;
+        left: 200px;
+    }
+
+    .button_Y, .button_A {
+        top: 50px;
+    }
+    .button_X, .button_B {
+        left: 380px;
+    }
+    .button_A {
+        left: 420px;
+        border-color: #0ca;
+    }
+    .button_A.gc {
+        width: 50px;
+        height: 50px;
+        left: 370px;
+        top: 50px;
+        border-radius: 60px;
+
+    }
+    .button_X {
+        top: 10px;
+    }
+    .button_B {
+        top: 90px;
+        border-color: #c33;
+    }
+    .button_b.gc {
+        width: 30px;
+        height: 30px;
+        border-radius: 30px;
+        left: 340px;
+        top: 100px;
+    }
+    .button_Y {
+        left: 340px;
+    }
+    .button_Y.gc {
+        width: 40px;
+        height: 20px;
+        top: 20px;
+        left: 360px;
+        transform: rotate(-20deg);
+    }
+    .button_X.gc {
+        width: 20px;
+        height: 40px;
+        top: 45px;
+        left: 435px;
+        transform: rotate(-10deg);
+    }
+    .button_X, .button_Y {
+        border-color: #ddd;
+    }
+    .button_l {
+        width: 30px;
+        left: 10px;
+        top: 10px;
+        height: 30px;
+        border-radius: 10px;
+    }
+    .button_Zl, .button_L.gc{
+        width: 30px;
+        left: 10px;
+        top: 60px;
+        height: 60px;
+        border-radius: 10px;
+    }
+     .button_R, .button_Zr.gc {
+        width: 30px;
+        left: 480px;
+        top: 10px;
+        height: 30px;
+        border-radius: 10px;
+    }
+    .button_Zr, .button_R.gc {
+        width: 30px;
+        left: 480px;
+        top: 60px;
+        height: 60px;
+        border-radius: 10px;
+    }
+    .button_Zl, .button_Zr, .button_L.gc, .button_R.gc {
+        border-color: #ddd;
+    }
+    .button_Zl.gc {
+        display: none;
+    }
+    .button_l , .button_r, .button_Zr.gc {
+        border-color: #229;
+    }
+
+</style>
+<div class="box">
+<div class="button_A"></div>
+<div class="button_B"></div>
+<div class="button_X"></div>
+<div class="button_Y"></div>
+<div class="button_Zl"></div>
+<div class="button_Zr"></div>
+<div class="button_L"></div>
+<div class="button_R"></div>
+<div class="stick_l"><div class="stick_l_inner"></div></div>
+<div class="stick_r"><div class="stick_r_inner"></div></div>
+</div>
+<script>
+    let button_A = document.querySelector(".button_A");
+    let button_B = document.querySelector(".button_B");
+    let button_X = document.querySelector(".button_X");
+    let button_Y = document.querySelector(".button_Y");
+    let button_Zl = document.querySelector(".button_Zl");
+    let button_Zr = document.querySelector(".button_Zr");
+    let button_L = document.querySelector(".button_L");
+    let button_R = document.querySelector(".button_R");
+    let stick_l = document.querySelector(".stick_l");
+    let stick_r = document.querySelector(".stick_r");
+    let buttons = [button_A, button_B, button_X, button_Y, button_Zl, button_Zr, button_L, button_R];
+
+    let params = new URLSearchParams(window.location.search);
+    let index = +params.get("p");
+    let gc = !!+params.get("gc");
+    if(gc) buttons.map(x=>x.classList.add("gc"));
+
+
+    let backgrounds = {
+        "A": "#0ca",
+        "B": "#c33",
+        "X": "#ddd",
+        "Y": "#ddd",
+        "L": !gc ? "#229" : "#ddd",
+        "R": !gc ? "#229" : "#ddd",
+        "Zl": gc ? "#229" : "#ddd",
+        "Zr": gc ? "#229" : "#ddd",
+    }
+
+
+    let w = new WebSocket("ws://localhost:3002");
+    // setInterval(_=>{
+//        if(w.readyState != 1) w = new WebSocket("ws://localhost:3002");
+//        console.log("WS Refresh")
+    // }, 1000);
+    let logging = false;
+    let STICK_RANGE = 80;
+    w.onmessage = d => {
+        let json = JSON.parse('[' + d.data + ']');
+        if(logging) console.log(json)
+        if(json.length < 1) return;
+        stick_l.children[0].style.left = (30 + (json[index].ls.x / (65536/STICK_RANGE))) + "px";
+        stick_l.children[0].style.top = (30 + (-json[index].ls.y / (65536/STICK_RANGE))) + "px";
+        stick_r.children[0].style.left = (30 + (json[index].rs.x / (65536/STICK_RANGE))) + "px";
+        stick_r.children[0].style.top = (30 + (-json[index].rs.y / (65536/STICK_RANGE))) + "px";
+        
+        //buttons.map(x=>x.style.background = "auto");
+        for(let b of buttons) b.style.background = "none";
+        for(let b of json[index].buttons) {
+            if(gc && "LR".includes(b)) continue;
+            let el = document.querySelector(".button_" + b);
+            if(el != null) el.style.background = backgrounds[b]; 
+        }
+        if (gc) {
+            let val_r = json[index].gcr / 327.67;
+            button_R.style.backgroundImage = `linear-gradient(0deg, #ddd 0%, #ddd ${val_r}%, #0000 ${val_r}%, #0000 100%)`
+            let val_l = json[index].gcl / 327.67;
+            button_L.style.backgroundImage = `linear-gradient(0deg, #ddd 0%, #ddd ${val_l}%, #0000 ${val_l}%, #0000 100%)`
+        }
+    }
+
+</script>

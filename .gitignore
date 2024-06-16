@@ -1,0 +1,15 @@
+*.zip
+bun.lockb
+node_modules
+periscope/Cargo.lock
+periscope/target
+backend
+backend.exe
+package.json
+sysmodule/sys-scope*
+sysmodule/build.sh
+sysmodule/build
+icons/key.txt
+libscope/debug
+libscope/lib
+libscope/release

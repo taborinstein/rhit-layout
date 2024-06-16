@@ -1,0 +1,15 @@
+.player_name,
+.win_count {
+    align-items: center;
+    display: flex;
+}
+
+.pn,
+.seed {
+    line-height: 1em;
+    height: 0.78em;
+}
+
+.stock_icon {
+    align-self: center;
+}
