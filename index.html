@@ -18,6 +18,9 @@
             update_names(data.p1, data.p2);
             [wc0.innerText, wc1.innerText] = data.wins;
         }
+        if(data.type == "update_layout") {
+            update_layout(data.l);
+        }
         if (data.type == "init") {
             ws.send(JSON.stringify({
                 type: "init_response",
@@ -25,8 +28,19 @@
                 p2,
                 wins: [+wc0.innerText, +wc1.innerText]
             }))
+            ws.send(JSON.stringify({
+                type: "init_layout_response",
+                l: [
+                    document.querySelector("html").style.cssText.split("--color-l:")[1].split(";")[0].trim(),
+                    document.querySelector("html").style.cssText.split("--color-r:")[1].split(";")[0].trim(),
+                    document.querySelector(".middle_main").innerHTML,
+                    document.querySelector(".middle_sub").innerText
+                ]
+            }))
+            
         }
     }
+
 
     window.onload = () => {
 
@@ -35,7 +49,7 @@
             [wc0, wc1] = document.querySelectorAll(".win_count");
 
             update_names(p1, p2);
-
+            update_layout(l);
             // this shouldnt exist, remove it it causes issues
             if (navigator.platform == "Win32") {
                 console.log("Windows detected, adding stylesheet")
@@ -52,6 +66,8 @@
         // gc: -1 = none, 0 = procon, 1 = gc
     let p1 = ["jediian", "roy", 2, "he/him", "us-in", 0, "Seed 2"];
     let p2 = ["pyukumuku", "wiifit", 0, "she/her", "us-tx", 0, "Seed 1"];
+    // [ color_l, color_r, innerHTML, bottom text ]
+    let l = ["#660000", "#000066", `<h1 class="big">Placeholder</h1><p>lorem ipsum</p>`, "Grand Finals - Best of 5"];
     async function update_names(data_l, data_r) {
         p1 = [...data_l];
         p2 = [...data_r];
@@ -95,9 +111,14 @@
             iframe_r.src = `http://localhost:3002?p=1&gc=${+data_r[5]}`;
             iframe_r.style.visibility = "visible";
         } else iframe_r.style.visibility = "hidden";
-
-
-
+    }
+    function update_layout(l) {
+        document.querySelector("html").style.cssText = `--color-l: ${l[0]}; --color-r: ${l[1]}; --color-l-dark: ${darken_color(l[0])}; --color-r-dark: ${darken_color(l[1])};`;
+        document.querySelector(".middle_main").innerHTML = l[2];
+        document.querySelector(".middle_sub").innerText = l[3];
+    }
+    function darken_color(c) {
+        return '#' + c.replace("#", '').match(/../g).map(x=>('0' + Math.max(0, parseInt(x,16) - 0x22).toString(16)).slice(-2)).join("");
     }
 </script>
 <style>
@@ -435,11 +456,9 @@
     </div>
     <div class="middle">
         <div class="middle_main">
-            <h1 class="big">Placeholder</h1>
-            <p>lorem ipsum</p>
         </div>
         <div class="sub">
-            <div class="middle_sub">Grand Finals - Best of 5</div>
+            <div class="middle_sub"></div>
         </div>
     </div>
     <div class="container_r">

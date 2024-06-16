@@ -41,7 +41,6 @@ Bun.serve({
     port: 3002,
     websocket: {
         open(ws) {
-            console.log("connection")
             wss_2.push(ws);
         },
         message(ws, m) {

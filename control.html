@@ -2,10 +2,10 @@
 let q = e => document.querySelector(e);
 let chara = { "Bayonetta": "bayonetta", "Hero": "brave", "Banjo & Kazooie": "buddy", "Captain Falcon": "captain", "Chrom": "chrom", "Cloud": "cloud", "Daisy": "daisy", "King Dedede": "dedede", "Kazuya": "demon", "Diddy Kong": "diddy", "Terry": "dolly", "Donkey Kong": "donkey", "Duck Hunt": "duckhunt", "Sephiroth": "edge", "Pyra/Mythra": "pythra", "Pyra": "eflame", "Mythra": "elight", "Falco": "falco", "Fox": "fox", "Mr. Game & Watch": "gamewatch", "Ganondorf": "ganon", "Greninja": "gekkouga", "Incineroar": "gaogaen", "Ice Climbers": "ice_climber", "Ike": "ike", "Inkling": "inkling", "Joker": "jack", "Corrin": "kamui", "Ken": "ken", "Kirby": "kirby", "Bowser": "koopa", "Bowser Jr": "koopajr", "King K. Rool": "krool", "Link": "link", "Little Mac": "littlemac", "Lucario": "lucario", "Lucas": "lucas", "Lucina": "lucina", "Luigi": "luigi", "Mario": "mario", "Dr. Mario": "mariod", "Marth": "marth", "Byleth": "master", "Meta Knight": "metaknight", "Mewtwo": "mewtwo", "Mii Brawler": "miifighter", "Mii Gunner": "miigunner", "Mii Swordfighter": "miiswordsman", "Villager": "murabito", "Ness": "ness", "Piranha Plant": "packun", "Pac-Man": "pacman", "Palutena": "palutena", "Peach": "peach", "Pichu": "pichu", "Steve": "pickel", "Pikachu": "pikachu", "Olimar": "pikmin", "Pit": "pit", "Dark Pit": "pitb", "Charizard": "plizardon", "Pokemon Trainer": "ptrainer", "Jigglypuff": "purin", "Squirtle": "pzenigame", "Robin": "reflet", "Richter": "richter", "Ridley": "ridley", "ROB": "robot", "Mega Man": "rockman", "Rosalina": "rosetta", "Roy": "roy", "Ryu": "ryu", "Samus": "samus", "Dark Samus": "samusd", "Sheik": "sheik", "Isabelle": "shizue", "Shulk": "shulk", "Simon": "simon", "Snake": "snake", "Sonic": "sonic", "Zero Suit Samus": "szerosuit", "Min-Min": "tantan", "Toon Link": "toonlink", "Sora": "trail", " Wario": "wario", "Wii Fit Trainer": "wiifit", "Wolf": "wolf", "Yoshi": "yoshi", "Young Link": "younglink", "Zelda": "zelda" };
 let p1n, p1c, p2n, p2c, p1c0, p2c0, wc0, wc1, p1s, p2s, p1pn, p2pn, p1f, p2f, p1gc, p2gc, p1sd, p2sd, p1check, p2check, name_cache;
+let color_l, color_r, m_html, m_sub;
 let ws = new WebSocket("ws://localhost:3000");
 ws.onmessage = d => {
     let data = JSON.parse(d.data);
-    console.log(data)
     if(data.type == "init_response") {
         [p1n.value, p1c.value, p1c0.value, p1pn.value, p1f.value, p1gc.value, p1sd.value] = data.p1;
         [p2n.value, p2c.value, p2c0.value, p2pn.value, p2f.value, p2gc.value, p2sd.value] = data.p2;
@@ -13,6 +13,14 @@ ws.onmessage = d => {
         update_gc(1, data.p2[5]);
         [wc0.value, wc1.value] = data.wins
         update_icons();
+    }
+    if(data.type == "init_layout_response") {
+        [
+            color_l.value,
+            color_r.value,
+            m_html.value,
+            m_sub.value 
+        ] = data.l;
     }
 }
 window.onload = () => {
@@ -48,6 +56,12 @@ window.onload = () => {
 
     name_cache = q(".stored");
 
+    m_html = q(".m_html");
+    m_sub = q(".m_sub");
+    color_l = q(".color_l");
+    color_r = q(".color_r");
+
+
     for (let key of Object.keys(chara)) {
         let el = document.createElement("option");
         el.value = chara[key];
@@ -74,7 +88,7 @@ function load_stored(n) {
     let data = JSON.parse(name_cache.value);
     if(n) [p2n.value, p2c.value, p2c0.value, p2pn.value, p2f.value ] = data;
     else [p1n.value, p1c.value, p1c0.value, p1pn.value, p1f.value ] = data;
-    update_gc(n, data.pop());
+    if((n == 0 && p1check.checked) || (n == 1 && p2check.checked)) update_gc(n, data.pop());
     update_icons();
 }
 function swap() {
@@ -83,9 +97,14 @@ function swap() {
     update_icons()
 }
 function update_gc(n, v) {
-    console.log(n, v)
-    if(n < 1) { if(p1check.checked = v > -1) p1gc.value = v == 1; }
-    else if(p2check.checked = v > -1) p2gc.value = v == 1;
+    if(n < 1) { 
+        p2gc.value = "false";
+        if(p1check.checked = v > -1) p1gc.value = v == 1; 
+    }
+    else {
+        p1gc.value = "false";
+        if(p2check.checked = v > -1) p2gc.value = v == 1;
+    }
 }
 function update_icons() {
     p1s.src = `./icons/chara_2_${p1c.value}_0${p1c0.value}.png`;
@@ -99,6 +118,13 @@ function submit() {
         wins: [wc0.value, wc1.value]
     }));
 }
+function submit_layout() {
+    ws.send(JSON.stringify({
+        type: "update_layout",
+        l: [color_l.value, color_r.value, m_html.value, m_sub.value]
+    }));
+}
+
 </script>
 <style>
     .c {
@@ -110,15 +136,23 @@ function submit() {
     .p1c0, .p2c0, .wc0, .wc1 {
         width: 4em;
     }
-     .p1s, .p2s, .p1sd {
+    .p1s, .p2s, .p1sd {
         width: 2em;
-     }
-     .p1sd, .p2sd, .p1pn, .p2pn {
+    }
+    .p1sd, .p2sd, .p1pn, .p2pn {
         width: 7em;
-     }
-     .p1f, .p2f {
+    }
+    .p1f, .p2f {
         width: 10em;
-     }
+    }
+    .wc0 {
+        background-color: #600;
+        color: #fff;
+    }
+    .wc1 {
+        background-color: #006;
+        color: #fff;
+    }
     
 </style>
 <div class="c">
@@ -160,14 +194,19 @@ function submit() {
     </select>
     <input type="checkbox" checked class="p2check" />
 </div>
-<button onclick="submit()">UPDATE!</button>
 <button onclick="swap()">swap users</button>
 <br />
 <br /><br /><br />
-<select class="stored">
-
-</select>
-<button onclick="load_stored(0)">Load as P1</button>
+Load stored:&nbsp;<select class="stored"></select><button onclick="load_stored(0)">Load as P1</button>
 <button onclick="load_stored(1)">Load as P2</button>
-<br /><br /><br />
+<br \><br \>
+Layout Options:
+L/R Colors:&nbsp;<input type="color" class="color_l"/><input type="color" class="color_r" /><br />
+Inner HTML<br \>
+<textarea class="m_html"></textarea><br />
+Bottom text:&nbsp;<input class="m_sub" />
+<br /><br />
+<button onclick="submit_layout()">Update Layout!</button>
+<button onclick="submit()">Update Players!</button>
+<br />
 <a href="/vwr.html" target="_blank">Open layout in new tab</a>
