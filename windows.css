@@ -5,9 +5,10 @@
 }
 
 .pn,
-.seed {
+.seed,
+.middle_sub {
     line-height: 1em;
-    height: 0.78em;
+    /* height: 0.78em; */
 }
 
 .stock_icon {

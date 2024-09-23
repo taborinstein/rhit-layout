@@ -10,7 +10,8 @@
     let box_l;
     let box_r;
 
-    let ws = new WebSocket("ws://localhost:3000");
+    let ip = window.location.toString().replace(/https?/, 'ws');//window.location.search.match(/ip=\d\d\d?\.\d\d\d?\.\d\d\d?\.\d\d\d?/);
+    let ws = new WebSocket(ip);
     ws.onmessage = d => {
         let data = JSON.parse(d.data);
         if (data.type == "reload") window.location.reload();
@@ -58,16 +59,21 @@
                 style.href = "./windows.css";
                 document.head.appendChild(style);
             }
+            fetch(window.location.href + "inner.html")
+            .then(r => r.text())
+            .then(r => {
+                document.querySelector(".middle_main").innerHTML = r;
+            });
 
 
             // i=0;j=180;c=setInterval(_=>{document.querySelector(":root").style.cssText = "--color-r: hsl(" + i + ", 100%, 50%);" + "--color-l: hsl(" + j + ", 100%, 50%)"; i = (i + 1) % 360; j = (j+1)%360;});
         }
         // [ name, character, skin, pronouns, flag, gc, seed ]
         // gc: -1 = none, 0 = procon, 1 = gc
-    let p1 = ["jediian", "roy", 2, "he/him", "us-in", 0, "Seed 2"];
-    let p2 = ["pyukumuku", "wiifit", 0, "she/her", "us-tx", 0, "Seed 1"];
+    let p1 = ["Komali", "younglink", 0, "she/her", "us-tn", -1, "Seed 2"];
+    let p2 = ["pyukumuku", "wiifit", 0, "she/her", "us-tx", -1, "Seed 1"];
     // [ color_l, color_r, innerHTML, bottom text ]
-    let l = ["#660000", "#000066", `<h1 class="big">Placeholder</h1><p>lorem ipsum</p>`, "Grand Finals - Best of 5"];
+    let l = ["#800000", "#800000", `<h1 class="big">Placeholder</h1><p>lorem ipsum</p>`, "Grand Finals - Best of 5"];
     async function update_names(data_l, data_r) {
         p1 = [...data_l];
         p2 = [...data_r];

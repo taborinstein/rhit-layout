@@ -72,7 +72,7 @@ window.onload = () => {
     fetch("http://localhost:3000/players.json", { cache: "no-cache" })
     .then(r => r.json())
     .then(data => {
-        for(let datum of data) {
+        for(let datum of data.sort()) {
             let el = document.createElement("option");
             el.value = JSON.stringify(datum)
             el.innerText = datum[0];
