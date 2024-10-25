@@ -1,7 +1,7 @@
 **This repository is an upload of a kind of scrappy project; the codebase is currently unorganized and quite messy, and was not initially intended for external use. Viewer discretion advised**
 ### Input display is modified from [periscope](https://codeberg.org/periwinkle/periscope); I take no credit for the vast majority of the code in `./libscope`, `./sysmodule`, and `./periscope`.  Please support the original project, it is very cool!
 # RHIT's SSBU Layout*
-**\*random project I made in my free time**
+**\*random project I made in my free time**  
 This is a layout for streaming Super Smash Bros. Ultimate in OBS.  It comes with a customizable interface and input display.
 ![image](demo.png)
 ## Building
