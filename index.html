@@ -109,12 +109,13 @@
         } else pn_r.style.display = "none";
         let iframe_l = box_l.querySelector("iframe");
         let iframe_r = box_r.querySelector("iframe");
+        let url_start = window.location.href.split(":" + window.location.port)[0];
         if (+data_l[5] > -1) {
-            iframe_l.src = `http://localhost:3002?p=0&gc=${+data_l[5]}`;
+            iframe_l.src = `${url_start}:3002?p=0&gc=${+data_l[5]}`;
             iframe_l.style.visibility = "visible";
         } else iframe_l.style.visibility = "hidden";
         if (+data_r[5] > -1) {
-            iframe_r.src = `http://localhost:3002?p=1&gc=${+data_r[5]}`;
+            iframe_r.src = `${url_start}:3002?p=1&gc=${+data_r[5]}`;
             iframe_r.style.visibility = "visible";
         } else iframe_r.style.visibility = "hidden";
     }
@@ -141,6 +142,10 @@
     @font-face {
         font-family: "Nimbus";
         src: url("NimbusSans.otf");
+    }
+     @font-face {
+        font-family: "SquareFont";
+        src: url("Square.ttf");
     }
     
     @font-face {
@@ -441,7 +446,7 @@
                 <div class="rain_inner l">
                     <div class="box_inner_l">
                         <div class="frame">
-                            <iframe allowtransparency="true" class="frame" src="http://localhost:3002?p=0"></iframe>
+                            <iframe allowtransparency="true" class="frame" src="http://137.112.198.139:3002?p=0"></iframe>
                         </div>
                         <div class="player_name"></div>
                         <img class="stock_icon" src="icons/chara_2_mario_00.png" />
@@ -478,7 +483,7 @@
                         <img class="stock_icon" src="icons/chara_2_mario_01.png" />
                         <div class="player_name"></div>
                         <div class="frame idr">
-                            <iframe allowtransparency="true" class="frame" src="http://localhost:3002?p=1&gc=0"></iframe>
+                            <iframe allowtransparency="true" class="frame" src="http://137.112.198.139:3002?p=1&gc=0"></iframe>
                         </div>
                     </div>
                 </div>
