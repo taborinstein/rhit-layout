@@ -1,217 +1,39 @@
-<script>
-let q = e => document.querySelector(e);
-let chara = { "Bayonetta": "bayonetta", "Hero": "brave", "Banjo & Kazooie": "buddy", "Captain Falcon": "captain", "Chrom": "chrom", "Cloud": "cloud", "Daisy": "daisy", "King Dedede": "dedede", "Kazuya": "demon", "Diddy Kong": "diddy", "Terry": "dolly", "Donkey Kong": "donkey", "Duck Hunt": "duckhunt", "Sephiroth": "edge", "Pyra/Mythra": "pythra", "Pyra": "eflame", "Mythra": "elight", "Falco": "falco", "Fox": "fox", "Mr. Game & Watch": "gamewatch", "Ganondorf": "ganon", "Greninja": "gekkouga", "Incineroar": "gaogaen", "Ice Climbers": "ice_climber", "Ike": "ike", "Inkling": "inkling", "Joker": "jack", "Corrin": "kamui", "Ken": "ken", "Kirby": "kirby", "Bowser": "koopa", "Bowser Jr": "koopajr", "King K. Rool": "krool", "Link": "link", "Little Mac": "littlemac", "Lucario": "lucario", "Lucas": "lucas", "Lucina": "lucina", "Luigi": "luigi", "Mario": "mario", "Dr. Mario": "mariod", "Marth": "marth", "Byleth": "master", "Meta Knight": "metaknight", "Mewtwo": "mewtwo", "Mii Brawler": "miifighter", "Mii Gunner": "miigunner", "Mii Swordfighter": "miiswordsman", "Villager": "murabito", "Ness": "ness", "Piranha Plant": "packun", "Pac-Man": "pacman", "Palutena": "palutena", "Peach": "peach", "Pichu": "pichu", "Steve": "pickel", "Pikachu": "pikachu", "Olimar": "pikmin", "Pit": "pit", "Dark Pit": "pitb", "Charizard": "plizardon", "Pokemon Trainer": "ptrainer", "Jigglypuff": "purin", "Squirtle": "pzenigame", "Robin": "reflet", "Richter": "richter", "Ridley": "ridley", "ROB": "robot", "Mega Man": "rockman", "Rosalina": "rosetta", "Roy": "roy", "Ryu": "ryu", "Samus": "samus", "Dark Samus": "samusd", "Sheik": "sheik", "Isabelle": "shizue", "Shulk": "shulk", "Simon": "simon", "Snake": "snake", "Sonic": "sonic", "Zero Suit Samus": "szerosuit", "Min-Min": "tantan", "Toon Link": "toonlink", "Sora": "trail", " Wario": "wario", "Wii Fit Trainer": "wiifit", "Wolf": "wolf", "Yoshi": "yoshi", "Young Link": "younglink", "Zelda": "zelda" };
-let p1n, p1c, p2n, p2c, p1c0, p2c0, wc0, wc1, p1s, p2s, p1pn, p2pn, p1f, p2f, p1gc, p2gc, p1sd, p2sd, p1check, p2check, name_cache;
-let color_l, color_r, m_html, m_sub;
-let ws = new WebSocket("ws://localhost:3000");
-ws.onmessage = d => {
-    let data = JSON.parse(d.data);
-    if(data.type == "init_response") {
-        [p1n.value, p1c.value, p1c0.value, p1pn.value, p1f.value, p1gc.value, p1sd.value] = data.p1;
-        [p2n.value, p2c.value, p2c0.value, p2pn.value, p2f.value, p2gc.value, p2sd.value] = data.p2;
-        update_gc(0, data.p1[5]);
-        update_gc(1, data.p2[5]);
-        [wc0.value, wc1.value] = data.wins
-        update_icons();
-    }
-    if(data.type == "init_layout_response") {
-        [
-            color_l.value,
-            color_r.value,
-            m_html.value,
-            m_sub.value 
-        ] = data.l;
-    }
-}
-window.onload = () => {
-    
-    p1n = q(".p1n");
-    p1c = q(".p1c");
-    p1c0 = q(".p1c0");
+<!DOCTYPE html>
+<html>
 
-    p2n = q(".p2n");
-    p2c = q(".p2c");
-    p2c0 = q(".p2c0");
+<head>
+    <link rel="stylesheet" href="styles/control.scss" />
+</head>
 
-    wc0 = q(".wc0");
-    wc1 = q(".wc1");
+<body>
+    <div class="inputs">
+        <div class="players"><!-- react generates here --></div>
+        <button class="swap_button" onclick="swap_users()">Swap Users</button>
+        <!-- <button onclick="send_to_server()">Submit Players</button> -->
+    </div>
+    <div>
+        <div class="player_selector">
+            <input type="text" placeholder=" Search" />
+            <div class="player_data">
+            </div>
+            <button onclick="load_selected(0)">Load P1</button>
+            <button onclick="load_selected(1)">Load P2</button>
+        </div>
+        <div class="load_sgg">
+            <input placeholder="https://start.gg/..." />
+            <button onclick="fetch_seeds()">Load seeds</button>
+        </div>
+    </div>
+    <div class="layout_row">
+        <div class="header">Layout:</div><div class="layout_input"><input placeholder="Grand Finals • Best of 5" data-value="game_bar" /></div>
+    </div>
+    <button onclick="send_to_server()">GO</button>
+    <script src="external/react.dev.js"></script>
+    <script src="external/react-dom.dev.js"></script>
+    <script src="elements/control/player.jsx" type="module"></script>
+    <script src="scripts/chara_data.js"></script>
+    <script src="scripts/socket.js"></script>
+    <script src="scripts/control.js"></script>
+</body>
 
-    p1s = q(".p1s");
-    p2s = q(".p2s");
-
-    p1sd = q(".p1sd");
-    p2sd = q(".p2sd");
-
-    p1pn = q(".p1pn");
-    p2pn = q(".p2pn");
-
-    p1f = q(".p1f");
-    p2f = q(".p2f");
-
-    p1gc = q(".p1gc");
-    p2gc = q(".p2gc");
-
-    p1check = q(".p1check");
-    p2check = q(".p2check")
-
-    name_cache = q(".stored");
-
-    m_html = q(".m_html");
-    m_sub = q(".m_sub");
-    color_l = q(".color_l");
-    color_r = q(".color_r");
-
-
-    for (let key of Object.keys(chara)) {
-        let el = document.createElement("option");
-        el.value = chara[key];
-        el.innerText = key;
-        p1c.appendChild(el.cloneNode(true))
-        p2c.appendChild(el);
-    }
-    fetch("http://localhost:3000/players.json", { cache: "no-cache" })
-    .then(r => r.json())
-    .then(data => {
-        for(let datum of data.sort()) {
-            let el = document.createElement("option");
-            el.value = JSON.stringify(datum)
-            el.innerText = datum[0];
-            name_cache.appendChild(el);
-        }
-    })
-
-    ws.onopen = () => ws.send('{"type":"init"}');
-
-    [p1c, p1c0, p2c, p2c0].map(e=>e.onchange = update_icons);
-}
-function submit_both() {
-    submit();
-    submit_layout();
-}
-function load_stored(n) {
-    let data = JSON.parse(name_cache.value);
-    if(n) [p2n.value, p2c.value, p2c0.value, p2pn.value, p2f.value ] = data;
-    else [p1n.value, p1c.value, p1c0.value, p1pn.value, p1f.value ] = data;
-    if((n == 0 && p1check.checked) || (n == 1 && p2check.checked)) update_gc(n, data.pop());
-    update_icons();
-}
-function swap() {
-    [p1n.value, p1c.value, p1c0.value, p1pn.value, p1f.value, p1gc.value, p1sd.value, p1check.checked, p2n.value, p2c.value, p2c0.value, p2pn.value, p2f.value, p2gc.value, p2sd.value, p2check.checked] = 
-    [p2n.value, p2c.value, p2c0.value, p2pn.value, p2f.value, p2gc.value, p2sd.value, p2check.checked, p1n.value, p1c.value, p1c0.value, p1pn.value, p1f.value, p1gc.value, p1sd.value, p1check.checked];
-    update_icons()
-}
-function update_gc(n, v) {
-    if(n < 1) { 
-        p2gc.value = "false";
-        if(p1check.checked = v > -1) p1gc.value = v == 1; 
-    }
-    else {
-        p1gc.value = "false";
-        if(p2check.checked = v > -1) p2gc.value = v == 1;
-    }
-}
-function update_icons() {
-    p1s.src = `./icons/chara_2_${p1c.value}_0${p1c0.value}.png`;
-    p2s.src = `./icons/chara_2_${p2c.value}_0${p2c0.value}.png`;
-}
-function submit() {
-    ws.send(JSON.stringify({
-        type: "update",
-        p1: [p1n.value, p1c.value, p1c0.value, p1pn.value, p1f.value, p1check.checked ? +(p1gc.value == "true") : -1, p1sd.value],
-        p2: [p2n.value, p2c.value, p2c0.value, p2pn.value, p2f.value, p2check.checked ? +(p2gc.value == "true") : -1, p2sd.value],
-        wins: [wc0.value, wc1.value]
-    }));
-}
-function submit_layout() {
-    ws.send(JSON.stringify({
-        type: "update_layout",
-        l: [color_l.value, color_r.value, m_html.value, m_sub.value]
-    }));
-}
-
-</script>
-<style>
-    .c {
-        display: flex;
-    }
-    .p1n, .p1c, .p2n, .p2c {
-        width: 10em;
-    }
-    .p1c0, .p2c0, .wc0, .wc1 {
-        width: 4em;
-    }
-    .p1s, .p2s, .p1sd {
-        width: 2em;
-    }
-    .p1sd, .p2sd, .p1pn, .p2pn {
-        width: 7em;
-    }
-    .p1f, .p2f {
-        width: 10em;
-    }
-    .wc0 {
-        background-color: #600;
-        color: #fff;
-    }
-    .wc1 {
-        background-color: #006;
-        color: #fff;
-    }
-    
-</style>
-<div class="c">
-    <input class="p1n" placeholder="player 1 name" />
-    <select class="p1c" ></select>
-    <input class="p1c0" placeholder="00" min=0 max=7 type="number" />
-    &nbsp;
-    <input class="wc0" type="number" placeholder="0" />
-    &nbsp;
-    <img class="p1s" src="" />
-</div>
-<div class="c">
-    <input class="p1sd" placeholder="seed 1" />
-    <input class="p1pn" placeholder="p1 pronouns" />
-    <input class="p1f" placeholder="flag 1 (e.g. us-tn)" />
-    <select class="p1gc">
-        <option value=false>procon</option>
-        <option value=true>gamecube</option>
-    </select>
-    <input type="checkbox" checked class="p1check" />
-</div>
-<br />
-<div class="c">
-    <input class="p2n" placeholder="player 2 name" />
-    <select class="p2c"></select>
-    <input class="p2c0" placeholder="00" min=0 max=7 type="number" />
-    &nbsp;
-    <input class="wc1" type="number" placeholder="0" />
-    &nbsp;
-    <img class="p2s" src="" />
-</div>
-<div class="c">
-    <input class="p2sd" placeholder="seed 2" />
-    <input class="p2pn" placeholder="p2 pronouns" />
-    <input class="p2f" placeholder="flag 2 (e.g. us-in)" />
-    <select class="p2gc">
-        <option value=false>procon</option>
-        <option value=true>gamecube</option>
-    </select>
-    <input type="checkbox" checked class="p2check" />
-</div>
-<button onclick="swap()">swap users</button>
-<br />
-<br /><br /><br />
-Load stored:&nbsp;<select class="stored"></select><button onclick="load_stored(0)">Load as P1</button>
-<button onclick="load_stored(1)">Load as P2</button>
-<br \><br \>
-Layout Options:
-L/R Colors:&nbsp;<input type="color" class="color_l"/><input type="color" class="color_r" /><br />
-Inner HTML<br \>
-<textarea class="m_html"></textarea><br />
-Bottom text:&nbsp;<input class="m_sub" />
-<br /><br />
-<button onclick="submit_layout()">Update Layout!</button>
-<button onclick="submit()">Update Players!</button>
-<button onclick="submit_both()" style="background-color: #800;color:#fff">Submit All</button>
-<br />
-<a href="/vwr.html" target="_blank">Open layout in new tab</a>
+</html>

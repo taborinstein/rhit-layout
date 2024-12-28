@@ -1,0 +1,26 @@
+.center {
+    // min-width: 150px;
+    padding: 0.6em;
+    // &> div {
+    // }
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    .upper {
+        height: 1em;
+        padding: 5px 1em;
+        background-color: #500e;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        // font-size: 0.8em;
+        font-weight: normal;
+    }
+    .row:not(.upper) /* this is bad */ {
+        background-color: #500e;
+        font-size: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}

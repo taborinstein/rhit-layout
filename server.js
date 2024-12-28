@@ -1,56 +1,125 @@
-const h = {
-    headers: {
-        "Content-Type": "text/html",
-    },
-};
-let wss = [];
-let wss_2 = [];
+import Bun from "bun";
 import fs from "fs";
-let send = (m) => {
-    wss = wss.filter((x) => x.readyState != 3);
-    wss.forEach((x) => x.send(m));
-};
-Bun.serve({
-    port: 3000,
-    websocket: {
-        open(ws) {
-            wss.push(ws);
-        },
-        message(ws, m) {
-            send(m);
-        }
-    },
-    fetch(r, s) {
-        if (s.upgrade(r)) return;
-        let p = (new URL(r.url)).pathname;
-        return p == "/" ? new Response(
-            fs.readFileSync("./index.html"), h) : new Response(Bun.file("." + p), { headers: { "Content-Type": p.split(".").pop() } });
-    },
-    error() {
-        return new Response(null, { status: 404 });
-    },
-});
+import babel from "@babel/core";
+import * as sass from "sass";
+import Path from "path";
 
-//fs.watch(import.meta.dir, { recursive: true }, () => send('{"type": "reload"}'));
+import fetch_seeds from "./sgg.js";
+let auth = {};
+if(!fs.existsSync("./auth.json")) {
+    console.log("[!] Please create an auth.json file");
+    process.exit();
+}
+// format: { "token": "startggtoken" }
+auth = JSON.parse(fs.readFileSync("./auth.json").toString());
 
-let send_2 = (m) => {
-    wss_2 = wss_2.filter((x) => x.readyState != 3);
-    wss_2.forEach((x) => x.send(m));
-};
-Bun.serve({
-    port: 3002,
-    websocket: {
-        open(ws) {
-            wss_2.push(ws);
-        },
-        message(ws, m) {
-            send_2(m);
-        }
+const PORT = 3000;
+let sockets = {
+    store: [],
+    // this is bad but will work for what we need it to do
+    send_all: function (message) {
+        let payload = {
+            from: "server",
+            data: message.data,
+            type: message.type
+        };
+        this.store.forEach(ws => ws.send(JSON.stringify(payload)));
     },
-    fetch(r, s) {
-        if (s.upgrade(r)) return;
-        return new Response(
-            fs.readFileSync("./input.html"), h
-        );
+}; // hacky but it works
+
+// collapse the next 3 bits
+const compile_map = {
+    jsx: "js",
+    scss: "css",
+};
+function is_already_built(path, new_path) {
+    return fs.existsSync(new_path) && fs.lstatSync(path).mtimeMs < fs.lstatSync(new_path).mtimeMs;
+}
+function compile(path) {
+    path = Path.join("./", path);
+    let ext = path.split(".").pop();
+    let new_path = Path.join("./.cache", path).replace(new RegExp(ext + "$"), compile_map[ext]);
+    if (ext == "scss") {
+        // handle @use so saving a sheet that isn't directly linked works
+        let sass = fs.readFileSync(path).toString();
+        let parent = path.replace(/\/[^\/]*$/, "");
+        let uses = sass
+            .split(";")
+            .map(x => x.trim())
+            .filter(x => x.startsWith("@use"))
+            .map(x => x.split(" ")[1].slice(1, -1));
+        for (let use of uses) compile(parent + "/" + use);
+    }
+    if (is_already_built(path.new_path)) return new_path;
+    if (!fs.existsSync(".cache")) fs.mkdirSync(".cache");
+    let dir = new_path.replace(/\/[^\/]*$/, "");
+    if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+    switch (ext) {
+        case "jsx":
+            fs.writeFileSync(
+                new_path,
+                babel.transformFileSync(path, { presets: ["@babel/preset-react"] }).code
+            );
+            break;
+        case "scss":
+            fs.writeFileSync(new_path, sass.compile(path).css);
+        default:
+            break;
+    }
+    return new_path;
+}
+Bun.serve({
+    port: PORT,
+    fetch(req, serv) {
+        if (serv.upgrade(req)) return; // no clue what this does but it makes the websocket work
+
+        let path = req.url.replace("http://localhost:" + PORT, "");
+
+        // handle special files
+        if (path.endsWith(".jsx") || path.endsWith(".scss")) {
+            path = Path.join("./", path);
+            return new Response(Bun.file(compile(path)));
+        }
+
+        // custom paths
+        if (path == "/") return new Response(Bun.file("index.html"));
+        if (path == "/control") return new Response(Bun.file("control.html"));
+        if (path == "/comms") return new Response(Bun.file("comms.html"));
+
+        // default
+        return new Response(Bun.file(Path.join("./", path)));
+    },
+    websocket: {
+        open: ws => sockets.store.push(ws),
+        message: async (ws, message) => {
+            let json = JSON.parse(message);
+            if (json.from == "server") return;
+            let data = json.data;
+            switch (json.type) {
+                case "update":
+                    sockets.send_all(json);
+                    break;
+                case "fetch_seeds":
+                    sockets.send_all({
+                        type: "fetch_seeds",
+                        data: await fetch_seeds(data.url, auth.token)
+                    });
+                    break;
+                case "fetch_players":
+                    sockets.send_all({
+                        type: "fetch_players",
+                        data: JSON.parse(fs.readFileSync("./players.json").toString())
+                    });
+                    break;
+                case "fetch_current":
+                    sockets.send_all({
+                        type: "fetch_current"
+                    });
+                    break;
+                case "fetch_current_resp":
+                    sockets.send_all(json);
+                    break;
+            }
+        },
     },
 });
