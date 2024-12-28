@@ -1,7 +1,7 @@
 [
-    ["Komali", "younglink", 0, "she/her", "us-tn", 0],
+    ["Koko", "younglink", 0, "she/her", "us-tn", 0],
     ["door 2", "pitb", 2, "he/him", "us-in", 0],
-    ["pyukumuku", "wiifit", 0, "she/her", "us-tx", 0],
+    ["pyukumuku", "wiifit", 4, "she/her", "us-tx", 0],
     ["xtal", "tantan", 0, "he/him", "us-il", 7],
     ["xgoldGD", "younglink", 0, "he/him", "us-oh", 0],
     ["Clo", "gaogaen", 6, "they/them", "us-ca", 0],
@@ -9,7 +9,7 @@
     ["Devoidicus", "pythra", 4, "he/him", "us-il", 0],
     ["Sinon", "master", 3, "he/him", "us-il", 0],
     ["TheAudacity", "gamewatch", 0, "any", "gu", 0],
-    ["quandale", "ganon", 3, "he/him", "us-in", 0],
+    ["quandale", "edge", 7, "he/him", "us-in", 0],
     ["zzz", "mario", 1, "he/him", "us-wa", 0],
     ["Joycon Jesus", "samusd", 6, "they/them", "us-il", 0],
     ["ashush", "zelda", 0, "he/him", "us-nc", 0],
@@ -21,19 +21,23 @@
     ["SpaceGrenadier131", "ridley", 7, "he/him", "us-il", 0],
     ["Kaos", "miifighter", 0, "", "us-mn", 0],
     ["Gravy", "dolly", 6, "he/him", "us-il", 0],
+    ["lenoir", "packun", 3, "she/they", "us-tx", 0],
+    ["2400Hours", "edge", 0, "he/him", "us-in", 0],
 
     ["dongkonkey", "donkey", 1, "", "us-il", 0],
-    ["PudgyDragn", "yoshi", 1, "", "u-ins", 0],
+    ["PudgyDragn", "yoshi", 1, "", "us-in", 0],
     ["Nikoli", "donkey", 5, "", "us-va", 0],
     ["CrazyMine", "master", 0, "", "us-in", 0],
     ["itssnowy71", "pacman", 0, "", "us", 0],
-    ["2400Hours", "edge", 0, "he/him", "us", 0],
     ["Danny96", "falco", 0, "", "us", 0],
     ["petebumble", "lucario", 0, "", "us", 0],
     ["Sparky", "captain", 0, "", "us", 0],
-    ["lenoir", "packun", 3, "she/they", "us", 0],
     ["eragon", "pythra", 1, "", "us", 0],
     ["Legend", "inkling", 2, "", "cn", 0],
-    ["Warg78", "pichu", 1, "", "us-fl", 0]
+    ["Warg78", "pichu", 1, "", "us-fl", 0],
+    ["boyfranxx", "roy", 7, "", "us-in", 0],
+    ["Excalibirb", "yoshi", 6, "", "us-tn", 0],
+    ["TheLimeWarrior", "dedede", 4, "", "us-tx", 0],
+    ["Ceeb", "gaogaen", 0, "", "us-fl", 0]
 
 ]

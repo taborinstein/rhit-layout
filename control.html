@@ -84,6 +84,10 @@ window.onload = () => {
 
     [p1c, p1c0, p2c, p2c0].map(e=>e.onchange = update_icons);
 }
+function submit_both() {
+    submit();
+    submit_layout();
+}
 function load_stored(n) {
     let data = JSON.parse(name_cache.value);
     if(n) [p2n.value, p2c.value, p2c0.value, p2pn.value, p2f.value ] = data;
@@ -208,5 +212,6 @@ Bottom text:&nbsp;<input class="m_sub" />
 <br /><br />
 <button onclick="submit_layout()">Update Layout!</button>
 <button onclick="submit()">Update Players!</button>
+<button onclick="submit_both()" style="background-color: #800;color:#fff">Submit All</button>
 <br />
 <a href="/vwr.html" target="_blank">Open layout in new tab</a>

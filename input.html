@@ -183,7 +183,7 @@
     }
 
 
-    let w = new WebSocket("ws://137.112.198.139:3002");
+    let w = new WebSocket(`ws://${window.location.host}`);
     // setInterval(_=>{
 //        if(w.readyState != 1) w = new WebSocket("ws://localhost:3002");
 //        console.log("WS Refresh")
