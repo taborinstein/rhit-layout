@@ -1,0 +1,33 @@
+@font-face {
+    font-family: Square;
+    src: url("/fonts/Square.ttf");
+}
+.sar {
+    font-family: Square;
+    display: inline-flex;
+    flex-direction: row;
+    // align-items: center;
+    // justify-content: center;
+    // height: 0;
+    .text {
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+        div {
+            display: flex;
+            flex-direction: row;
+            line-height: 0.8em;
+            .char {
+                width: 0.58em;
+            }
+        }
+        color: #bbb;
+    }
+    .num {
+        $num_h: 2.1em;
+        display: flex;
+        font-size: $num_h;
+        line-height: 0.8em;
+        color: #ddd;
+    }
+}

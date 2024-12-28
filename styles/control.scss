@@ -1,0 +1,148 @@
+@font-face {
+    font-family: Merriweather;
+    src: url("/fonts/MerriweatherSans.ttf");
+}
+body {
+    font-family: Merriweather;
+    display: grid;
+    grid-template-columns: auto auto;
+    gap: 20px;
+    width: 700px; // mods, kill this guy (with hammers)
+}
+.swap_button {
+    margin-left: 90px;
+}
+.player_selector {
+    border: 1px solid black;
+    display: block;
+    width: 200px;
+    background-color: #ddd;
+    cursor: pointer;
+    input {
+        width: 100%;
+        padding-left: 0;
+        padding-right: 0;
+        margin: 0;
+        background-color: #0000;
+        border: 0;
+        border-bottom: 1px black solid;
+    }
+    .player_data {
+        overflow: scroll;
+        width: 200px;
+        height: 150px;
+        border-bottom: 1px solid black;
+        margin-bottom: 5px;
+        .entry {
+            &.guest {
+                color: #833;
+            }
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 3px;
+            &.selected {
+                background-color: #aaf8;
+            }
+            &:not(.selected):hover {
+                background-color: #aaf4;
+            }
+            .icon {
+                height: 1.2em;
+            }
+            .prefix {
+                font-weight: 200;
+            }
+            .seed {
+                margin-left: auto;
+                margin-right: 0.5em;
+                font-size: 0.8em;
+            }
+        }
+    }
+}
+
+.header {
+    margin-right: 1em;
+    width: 4.5em;
+    font-weight: 200;
+    border-right: 1px #000a solid;
+}
+.player_row {
+    display: flex;
+    flex-direction: row;
+    margin: 5px 0;
+
+    .player_input {
+        display: flex;
+        flex-direction: column;
+        div {
+            display: flex;
+            flex-direction: row;
+            .top {
+                display: block;
+            }
+            .score {
+                width: 44px;
+                text-align: center;
+                font-size: 20px;
+                font-weight: bold;
+            }
+            input {
+                padding: 2px;
+            }
+            [data-value="name"] {
+                width: calc(11em + 12px + 4px);
+            }
+            [data-value="flag"],
+            [data-value="prefix"] {
+                width: 4em;
+            }
+            [data-value="pronoun"] {
+                width: 5em;
+            }
+            [data-value="year"] {
+                width: 2em;
+            }
+            [data-value="seed"] {
+                width: 4em;
+                // margin-left: 5px;
+            }
+        }
+    }
+    .chara_sel {
+        display: flex;
+        select {
+            height: 2em;
+        }
+        .skins {
+            display: flex;
+            flex-direction: row;
+
+            input {
+                width: 3em;
+                height: 1.4em;
+            }
+            .icons {
+                display: grid;
+                grid-template: "a b c d" "e f g h";
+                img {
+                    height: 1.5em;
+                    &.selected {
+                        background-color: #aaf;
+                    }
+                    &:not(.selected):hover {
+                        background-color: #aaf4;
+                    }
+                }
+            }
+        }
+    }
+}
+.layout_row {
+    display: flex;
+    flex-direction: row;
+}
+.null {
+    display: none !important;
+}

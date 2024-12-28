@@ -1,0 +1,88 @@
+bayonetta: Bayonetta
+brave: Hero
+buddy: Banjo & Kazooie
+captain: Captain Falcon
+chrom: Chrom
+cloud: Cloud
+daisy: Daisy
+dedede: King Dedede
+demon: Kazuya
+diddy: Diddy Kong
+dolly: Terry
+donkey: Donkey Kong
+duckhunt: Duck Hunt
+edge: Sephiroth
+eflame: Pyra
+elight: Mythra
+falco: Falco
+fox: Fox
+gamewatch: Mr. Game & Watch
+ganon: Ganondorf
+gaogaen: Incineroar
+gekkouga: Greninja
+ike: Ike
+inkling: Inkling
+jack: Joker
+kamui: Corrin
+ken: Ken
+kirby: Kirby
+koopa: Bowser
+koopajr: Bowser Jr
+krool: King K. Rool
+link: Link
+littlemac: Little Mac
+lucario: Lucario
+lucas: Lucas
+lucina: Lucina
+luigi: Luigi
+mario: Mario
+mariod: Dr. Mario
+marth: Marth
+master: Byleth
+metaknight: Meta Knight
+mewtwo: Mewtwo
+miifighter: Mii Brawler
+miigunner: Mii Gunner
+miiswordsman: Mii Swordfighter
+murabito: Villager
+ness: Ness
+packun: Piranha Plant
+pacman: Pac-Man
+palutena: Palutena
+peach: Peach
+pichu: Pichu
+pickel: Steve
+pikachu: Pikachu
+pikmin: Olimar
+pit: Pit
+pitb: Dark Pit
+plizardon: Charizard
+ptrainer: Pokemon Trainer
+purin: Jigglypuff
+pzenigame: Squirtle
+reflet: Robin
+richter: Richter
+ridley: Ridley
+robot: ROB
+rockman: Mega Man
+rosetta: Rosalina
+roy: Roy
+ryu: Ryu
+samus: Samus
+samusd: Dark Samus
+sheik: Sheik
+shizue: Isabelle
+shulk: Shulk
+simon: Simon
+snake: Snake
+sonic: Sonic
+szerosuit: Zero Suit Samus
+tantan: Min-Min
+toonlink: Toon Link
+trail: Sora
+wario:  Wario
+wiifit: Wii Fit Trainer
+wolf: Wolf
+yoshi: Yoshi
+younglink: Young Link
+zelda: Zelda
