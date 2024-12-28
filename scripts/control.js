@@ -1,29 +1,6 @@
+// this file is a mess, oops
 let player_data = [];
-function load_player_data() {
-    let data_el = document.querySelector(".player_data");
-    player_data
-        .sort(sort_func)
-        .forEach(p => {
-            let div = document.createElement("div");
-            div.className = "entry";
-            if(p.guest) div.classList.add("guest")
-            // this is lazy and bad
-            div.setAttribute("data-data", JSON.stringify(p));
-            div.innerHTML =
-                `<img class="icon" src="./icons/chara_2_${p.icon}.png">` +
-                (p.prefix ? `<div class="prefix">${p.prefix}</div>` : "") +
-                `<div class="name">${p.name}</div>` + 
-                (p.seed ? `<div class="seed">${p.seed}</div>` : "");
 
-            div.addEventListener("click", function () {
-                if (!this.classList.contains("selected")) {
-                    [...data_el.children].forEach(x => x.classList.remove("selected"));
-                    this.classList.add("selected");
-                } else this.classList.remove("selected");
-            });
-            data_el.appendChild(div);
-        });
-}
 window.onload = () => {
     socket.init(socket_handler);
     setTimeout(_ => {
@@ -45,6 +22,31 @@ window.onload = () => {
         clearInterval(load_int);
     });
 };
+
+function load_player_data() {
+    let data_el = document.querySelector(".player_data");
+    player_data.sort(sort_func).forEach(p => {
+        let div = document.createElement("div");
+        div.className = "entry";
+        if (p.guest) div.classList.add("guest");
+        // this is lazy and bad
+        div.setAttribute("data-data", JSON.stringify(p));
+        div.innerHTML =
+            `<img class="icon" src="./icons/chara_2_${p.icon}.png">` +
+            (p.prefix ? `<div class="prefix">${p.prefix}</div>` : "") +
+            `<div class="name">${p.name}</div>` +
+            (p.seed ? `<div class="seed">${p.seed}</div>` : "");
+
+        div.addEventListener("click", function () {
+            if (!this.classList.contains("selected")) {
+                [...data_el.children].forEach(x => x.classList.remove("selected"));
+                this.classList.add("selected");
+            } else this.classList.remove("selected");
+        });
+        data_el.appendChild(div);
+    });
+}
+
 function filter_list(input) {
     document.querySelectorAll(".entry").forEach(e => {
         if (e.querySelector(".name").innerText.toLowerCase().includes(input.toLowerCase()))
@@ -66,43 +68,21 @@ function load_from_data(data, n) {
     document.querySelectorAll(".icon_num")[n].value = +parts[1];
     unstuck_icons();
 }
-function unstuck_icons() {
-    // stupid and hacky
-    document.querySelectorAll("select")[0].dispatchEvent(new Event("change", { bubbles: true }));
-    document.querySelectorAll("select")[1].dispatchEvent(new Event("change", { bubbles: true }));
-    // stupider and hackier
-    document.querySelectorAll(".icon_num")[0].click();
-    document.querySelectorAll(".icon_num")[1].click();
-}
+
 function load_seeds(data) {
-    for(let seed of data) {
+    for (let seed of data) {
         let found = player_data.find(x => x.name.toLowerCase() == seed.user.toLowerCase());
-        if(found) found.seed = seed.seed; 
-        else player_data.push({
-            guest: true,
-            seed: seed.seed,
-            name: seed.user,
-            icon: "random_00"
-        })
+        if (found) found.seed = seed.seed;
+        else
+            player_data.push({
+                guest: true,
+                seed: seed.seed,
+                name: seed.user,
+                icon: "random_00",
+            });
     }
     document.querySelector(".player_data").innerHTML = "";
     load_player_data();
-}
-function socket_handler(type, message) {
-    switch(type) {
-        case "fetch_seeds":
-            load_seeds(message);
-            break;
-        case "fetch_players":
-            player_data = message;
-            load_player_data();
-            break;
-        case "fetch_current_resp":
-            load_from_data(message.p1, 0);
-            load_from_data(message.p2, 1);
-            document.querySelector("[data-value=game_bar]").value = message.layout.game_bar;
-            break;
-    }
 }
 
 function fetch_seeds() {
@@ -113,29 +93,42 @@ function fetch_seeds() {
 
 function get_player_json(n) {
     let obj = {};
-    let datasets = [...document.querySelectorAll(".player_row")[n].querySelectorAll("[data-value]")];
-    for(let set of datasets) //console.log(set.dataset.value)
+    let datasets = [
+        ...document.querySelectorAll(".player_row")[n].querySelectorAll("[data-value]"),
+    ];
+    for (let set of datasets) //console.log(set.dataset.value)
         obj[set.dataset.value] = set.value || null;
     return obj;
 }
-function send_to_server() {
-    let payload = {
-        p1: get_player_json(0),
-        p2: get_player_json(1),
-        layout: {
-            game_bar: document.querySelector("[data-value=game_bar]").value
-        }
-    };
-    // n -> Seed n
-    if(payload.p1.seed) payload.p1.seed = "Seed " + payload.p1.seed;
-    if(payload.p2.seed) payload.p2.seed = "Seed " + payload.p2.seed;
-    payload.p1.icon = `${document.querySelectorAll("select")[0].value}_0${document.querySelectorAll(".icon_num")[0].value}`;
-    payload.p2.icon = `${document.querySelectorAll("select")[1].value}_0${document.querySelectorAll(".icon_num")[1].value}`;
+function send_to_server(n) {
+    let payload = {};
+    if (n == 0 || n == -1) {
+        payload.p1 = get_player_json(0);
+        payload.p2 = get_player_json(1);
+        // n -> Seed n
+        if (payload.p1.seed) payload.p1.seed = "Seed " + payload.p1.seed;
+        if (payload.p2.seed) payload.p2.seed = "Seed " + payload.p2.seed;
+        payload.p1.icon = `${document.querySelectorAll("select")[0].value}_0${
+            document.querySelectorAll(".icon_num")[0].value
+        }`;
+        payload.p2.icon = `${document.querySelectorAll("select")[1].value}_0${
+            document.querySelectorAll(".icon_num")[1].value
+        }`;
+    }
+    if (n == 1 || n == -1)
+        payload.layout = {
+            game_bar: document.querySelector("[data-value=game_bar]").value,
+            colors: [
+                document.querySelector(".color_sel_l").value,
+                document.querySelector(".color_sel_r").value,
+            ],
+        };
+
     socket.transmit("update", payload);
 }
 
 function swap_users() {
-    for(let i in document.querySelector(".player_row").querySelectorAll("input")) {
+    for (let i in document.querySelector(".player_row").querySelectorAll("input")) {
         let lhs = document.querySelectorAll(".player_row")[0].querySelectorAll("input")[i];
         let rhs = document.querySelectorAll(".player_row")[1].querySelectorAll("input")[i];
         [lhs.value, rhs.value] = [rhs.value, lhs.value];
@@ -146,11 +139,60 @@ function swap_users() {
     unstuck_icons();
 }
 
-// user sorting
-let sort_func = (a,b) => {
-    if(a.seed && !b.seed) return -1;
-    if(!a.seed && b.seed) return 1;
-    if(a.seed && b.seed) return a.seed - b.seed;
-    if(!a.seed && !b.seed) return a.name.localeCompare(b.name);
-    return 0; // ???
+function submit_comms() {
+    socket.transmit("update_comms", {
+        comms: document
+            .querySelector(".comms_input")
+            .value.split(",")
+            .map(x => x.trim()),
+    });
 }
+
+function socket_handler(type, message) {
+    switch (type) {
+        case "fetch_seeds":
+            if(message.error) {
+                alert("Error when fetching seeds: " + message.error);
+                break;
+            }
+            load_seeds(message);
+            break;
+        case "fetch_players":
+            player_data = message;
+            load_player_data();
+            break;
+        case "fetch_current_resp":
+            if (message.p1) {
+                // layout message
+                load_from_data(message.p1, 0);
+                load_from_data(message.p2, 1);
+                document.querySelector("[data-value=game_bar]").value = message.layout.game_bar;
+                [
+                    document.querySelector(".color_sel_l").value,
+                    document.querySelector(".color_sel_r").value,
+                ] = message.layout.colors;
+            }
+            if (message.comms) {
+                // comms message
+                document.querySelector(".comms_input").value = message.comms.join(",");
+            }
+            break;
+    }
+}
+
+function unstuck_icons() {
+    // stupid and hacky
+    document.querySelectorAll("select")[0].dispatchEvent(new Event("change", { bubbles: true }));
+    document.querySelectorAll("select")[1].dispatchEvent(new Event("change", { bubbles: true }));
+    // stupider and hackier
+    document.querySelectorAll(".icon_num")[0].click();
+    document.querySelectorAll(".icon_num")[1].click();
+}
+// user sorting
+let sort_func = (a, b) => {
+    if (a.seed && !b.seed) return -1;
+    if (!a.seed && b.seed) return 1;
+    if (a.seed && b.seed) return a.seed - b.seed;
+    if (!a.seed && !b.seed) return a.name.localeCompare(b.name);
+    return 0; // ???
+};

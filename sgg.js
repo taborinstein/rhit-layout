@@ -5,7 +5,7 @@ export default async function fetch_seeds(url, tok) {
             url
         )
     )
-        return { error: "invalid url" };
+        return { error: "invalid url; it should end with brackets/xxxxxxx/xxxxxxx" };
     const query =
         "query PhaseSeeds($phaseId: ID!, $page: Int!, $perPage: Int!) {\nphase(id: $phaseId) {\nid\nseeds(query: { page: $page, perPage: $perPage }) {\npageInfo {\ntotal\ntotalPages\n}\nnodes {\nid\nseedNum\nentrant {\nid\nparticipants {\nid\ngamerTag\n}\n}\n}\n}\n}\n}";
     let phase = url.split("/")[8];

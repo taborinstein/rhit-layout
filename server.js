@@ -6,7 +6,24 @@ import Path from "path";
 
 import fetch_seeds from "./sgg.js";
 let auth = {};
-if(!fs.existsSync("./auth.json")) {
+
+//verbose out
+let vo = function () {
+    let args = [...arguments];
+    let type = +args.shift();
+    let fmt = [
+        "" /* normal */,
+        "\x1b[32;1m[!]\x1b[0m" /* info */,
+        "\x1b[33;1m[!]\x1b[0m" /* warning */,
+        "\x1b[31;1m[!]\x1b[0m" /* error */,
+    ][type];
+    if (process.argv.includes("-v")) {
+        process.stdout.write(fmt + " ");
+        console.log(...args, "\x1b[0m");
+    }
+};
+
+if (!fs.existsSync("./auth.json")) {
     console.log("[!] Please create an auth.json file");
     process.exit();
 }
@@ -21,7 +38,7 @@ let sockets = {
         let payload = {
             from: "server",
             data: message.data,
-            type: message.type
+            type: message.type,
         };
         this.store.forEach(ws => ws.send(JSON.stringify(payload)));
     },
@@ -48,10 +65,19 @@ function compile(path) {
             .map(x => x.trim())
             .filter(x => x.startsWith("@use"))
             .map(x => x.split(" ")[1].slice(1, -1));
-        for (let use of uses) compile(parent + "/" + use);
+        for (let use of uses)
+            if (!is_already_built(parent + "/" + use, new_path)) {
+                try {
+                    fs.unlinkSync(new_path);
+                } catch (_) {
+                    // this is stupid
+                }
+                break;
+            }
     }
-    if (is_already_built(path.new_path)) return new_path;
     if (!fs.existsSync(".cache")) fs.mkdirSync(".cache");
+    if (is_already_built(path, new_path)) return new_path;
+    vo(1, `Compiling ${path} => ${new_path}`);
     let dir = new_path.replace(/\/[^\/]*$/, "");
     if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
     switch (ext) {
@@ -70,6 +96,7 @@ function compile(path) {
 }
 Bun.serve({
     port: PORT,
+
     fetch(req, serv) {
         if (serv.upgrade(req)) return; // no clue what this does but it makes the websocket work
 
@@ -90,34 +117,41 @@ Bun.serve({
         return new Response(Bun.file(Path.join("./", path)));
     },
     websocket: {
-        open: ws => sockets.store.push(ws),
+        open: ws => {
+            vo(1, "New socket connection");
+            sockets.store.push(ws);
+        },
         message: async (ws, message) => {
             let json = JSON.parse(message);
             if (json.from == "server") return;
             let data = json.data;
+            vo(
+                2,
+                `Recieved message: \x1b[34m${json.type}\x1b[0m` +
+                    (data ? `:\x1b[35m${JSON.stringify(data)}\x1b[0m` : "")
+            );
             switch (json.type) {
                 case "update":
+                case "update_comms":
+                case "fetch_current_resp":
                     sockets.send_all(json);
                     break;
                 case "fetch_seeds":
                     sockets.send_all({
                         type: "fetch_seeds",
-                        data: await fetch_seeds(data.url, auth.token)
+                        data: await fetch_seeds(data.url, auth.token),
                     });
                     break;
                 case "fetch_players":
                     sockets.send_all({
                         type: "fetch_players",
-                        data: JSON.parse(fs.readFileSync("./players.json").toString())
+                        data: JSON.parse(fs.readFileSync("./players.json").toString()),
                     });
                     break;
                 case "fetch_current":
                     sockets.send_all({
-                        type: "fetch_current"
+                        type: "fetch_current",
                     });
-                    break;
-                case "fetch_current_resp":
-                    sockets.send_all(json);
                     break;
             }
         },

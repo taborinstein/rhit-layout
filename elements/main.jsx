@@ -4,12 +4,13 @@ import Center from "./center.jsx";
 window.onload = () => {
     ReactDOM.render(
         <>
-        <div className="floating">
-            <SAR num={13}/>
-            <div className="link">
-                <img src="icons/internal/twitch.svg" />/rhitssb
+            <div className="floating">
+                <SAR num={13} />
+                <div className="link">
+                    <img src="icons/internal/twitch.svg" />
+                    /rhitssb
+                </div>
             </div>
-        </div>
             <div className="exterior">
                 <Center />
                 <div className="main">
@@ -38,8 +39,13 @@ window.onload = () => {
         year: "Y2",
         social: null,
     });
+    set_colors(["#550000", "#550000"]);
     socket.init(socket_handler);
 };
+function set_colors(data) {
+    document.documentElement.style.setProperty("--color-l", data[0] + "ee");
+    document.documentElement.style.setProperty("--color-r", data[1] + "ee");
+}
 function update_player(n, data) {
     let side = document.querySelectorAll(".side")[n];
     side.setAttribute("data-store", JSON.stringify(data));
@@ -61,21 +67,33 @@ function update_player(n, data) {
 }
 
 function socket_handler(type, message) {
-    switch(type) {
+    switch (type) {
         case "update":
-            console.log(message)
-            update_player(0, message.p1);
-            update_player(1, message.p2);
-            document.querySelector("[data-identifier=game_bar]").innerText = message.layout.game_bar;
+            if (message.p1) {
+                update_player(0, message.p1);
+                update_player(1, message.p2);
+            }
+            if (message.layout) {
+                document.querySelector("[data-identifier=game_bar]").innerText =
+                    message.layout.game_bar;
+                set_colors(message.layout.colors);
+            }
             break;
         case "fetch_current":
             socket.transmit("fetch_current_resp", {
                 p1: JSON.parse(document.querySelectorAll(".side")[0].dataset.store),
                 p2: JSON.parse(document.querySelectorAll(".side")[1].dataset.store),
                 layout: {
-                    game_bar: document.querySelector("[data-identifier=game_bar]").innerText
-                }
-            })
-
+                    game_bar: document.querySelector("[data-identifier=game_bar]").innerText,
+                    colors: [
+                        document.documentElement.style
+                            .getPropertyValue("--color-l")
+                            .substring(0, 7),
+                        document.documentElement.style
+                            .getPropertyValue("--color-r")
+                            .substring(0, 7),
+                    ],
+                },
+            });
     }
 }

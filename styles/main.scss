@@ -1,13 +1,10 @@
 
 $row_h: 40px;
 $row_br: 3px;
+@use 'fonts.scss';
 @use 'side.scss';
 @use 'center.scss';
 @use 'sar.scss';
-@font-face {
-    font-family: Merriweather;
-    src: url("/fonts/MerriweatherSans.ttf");
-}
 
 body {
     font-family: Merriweather;

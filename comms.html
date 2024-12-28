@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="styles/comms.scss" />
+</head>
+
+<body>
+    <div class="comms"><!-- react generates here --></div>
+    <script src="external/react.dev.js"></script>
+    <script src="external/react-dom.dev.js"></script>
+    <script src="scripts/socket.js"></script>
+    <script type="module">
+        // cba to put this in another file
+        import gen_comms from "/elements/comms/commentator.jsx";
+        let render_comms = comms => ReactDOM.render(gen_comms(comms), document.querySelector(".comms"));
+        socket.init(socket_handler);
+        function socket_handler(type, message) {
+            switch (type) {
+                case "fetch_current":
+                    socket.transmit("fetch_current_resp", {
+                        comms: [...document.querySelectorAll(".name")].map(x => x.children[0].classList.contains("nopref") > 1 ? (x.children[0].innerText + " | " + x.children[1].innerText) : x.children[1].innerText)
+                    })
+                    break;
+                case "update_comms":
+                    ReactDOM.render(gen_comms(message.comms), document.querySelector(".comms"));
+                    break;
+            }
+        }
+        render_comms(["xtal", "ROSE|zzz"]);
+
+    </script>
+</body>
+
+</html>

@@ -12,8 +12,11 @@ $row_br: 5px;
 
     .row {
         height: $row_h;
-        &:nth-child(1) {
-            background-color: #500e;
+        &:not(.reversed):nth-child(1) {
+            background-color: var(--color-r);
+        }
+        &.reversed:nth-child(1) {
+            background-color: var(--color-l);
         }
         .square /* score */ {
             font-weight: bold;
@@ -68,7 +71,12 @@ $row_br: 5px;
     .under {
         height: $under_h;
         font-size: 0.75em;
-
+        &:not(.reversed) .widget {
+            background-color: var(--color-r);
+        }
+        &.reversed .widget {
+            background-color: var(--color-l);
+        }
         // font-style: italic;
         margin-top: 5px;
         .sep {
@@ -78,7 +86,6 @@ $row_br: 5px;
             padding: 0.5em;
             border-radius: $row_br;
             display: flex;
-            background-color: #500e;
             align-items: center;
             justify-content: center;
             min-width: 3em;
@@ -86,7 +93,7 @@ $row_br: 5px;
                 display: none;
             }
             img {
-                filter: brightness(100000%);
+                filter: brightness(100000%); // wtf was i cooking here
                 height: 0.8em;
                 margin-left: 0em;
                 margin-right: 0.5em;

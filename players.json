@@ -1,7 +1,7 @@
 [
     {
         "name": "Koko",
-        "prefix": "",
+        "prefix": "ROSE",
         "pronoun": "she/her",
         "icon": "younglink_02",
         "flag": "us-tn",
@@ -9,7 +9,7 @@
     },
     {
         "name": "door 2",
-        "prefix": "",
+        "prefix": null,
         "pronoun": "he/him",
         "icon": "pitb_02",
         "flag": "us-in",
@@ -17,7 +17,7 @@
     },
     {
         "name": "pyukumuku",
-        "prefix": "",
+        "prefix": null,
         "pronoun": "she/her",
         "icon": "wiifit_04",
         "flag": "us-tx",
@@ -25,7 +25,7 @@
     },
     {
         "name": "xtal",
-        "prefix": "",
+        "prefix": null,
         "pronoun": "he/him",
         "icon": "wolf_04",
         "flag": "us-il",
@@ -33,7 +33,7 @@
     },
     {
         "name": "Clo",
-        "prefix": "",
+        "prefix": null,
         "pronoun": "they/them",
         "icon": "gaogaen_06",
         "flag": "us-ca",
@@ -41,7 +41,7 @@
     },
     {
         "name": "TheAudacity",
-        "prefix": "",
+        "prefix": null,
         "pronoun": "any",
         "icon": "gamewatch_00",
         "flag": "gu",
@@ -49,7 +49,7 @@
     },
     {
         "name": "quandale",
-        "prefix": "",
+        "prefix": "ROSE",
         "pronoun": "he/him",
         "icon": "edge_07",
         "flag": "us-in",
@@ -65,7 +65,7 @@
     },
     {
         "name": "Joycon Jesus",
-        "prefix": "",
+        "prefix": null,
         "pronoun": "they/them",
         "icon": "samusd_06",
         "flag": "us-il",
@@ -73,7 +73,7 @@
     },
     {
         "name": "ashush",
-        "prefix": "",
+        "prefix": null,
         "pronoun": "he/him",
         "icon": "zelda_02",
         "flag": "us-nc",
@@ -81,7 +81,7 @@
     },
     {
         "name": "MrMRed",
-        "prefix": "",
+        "prefix": null,
         "pronoun": "he/him",
         "icon": "pit_04",
         "flag": "us-il",
@@ -89,7 +89,7 @@
     },
     {
         "name": "Rhea",
-        "prefix": "",
+        "prefix": null,
         "pronoun": "they/she",
         "icon": "ganon_06",
         "flag": "us-in",
@@ -97,7 +97,7 @@
     },
     {
         "name": "MagicBanana",
-        "prefix": "",
+        "prefix": null,
         "pronoun": "he/him",
         "icon": "palutena_00",
         "flag": "us-or",
@@ -105,15 +105,15 @@
     },
     {
         "name": "Kaos",
-        "prefix": "",
-        "pronoun": "",
+        "prefix": null,
+        "pronoun": null,
         "icon": "miifighter_00",
         "flag": "us-mn",
         "year": "Y1"
     },
     {
         "name": "Gravy",
-        "prefix": "",
+        "prefix": null,
         "pronoun": "he/him",
         "icon": "dolly_06",
         "flag": "us-il",
@@ -121,7 +121,7 @@
     },
     {
         "name": "2400Hours",
-        "prefix": "",
+        "prefix": null,
         "pronoun": "he/him",
         "icon": "edge_00",
         "flag": "us-in",
@@ -129,88 +129,88 @@
     },
     {
         "name": "dongkonkey",
-        "prefix": "",
-        "pronoun": "",
+        "prefix": null,
+        "pronoun": null,
         "icon": "donkey_01",
         "flag": "us-il",
         "year": "Y3"
     },
     {
         "name": "PudgyDragn",
-        "prefix": "",
-        "pronoun": "",
+        "prefix": null,
+        "pronoun": null,
         "icon": "yoshi_01",
         "flag": "us-in",
         "year": "Y2"
     },
     {
         "name": "Nikoli",
-        "prefix": "",
-        "pronoun": "",
+        "prefix": null,
+        "pronoun": null,
         "icon": "donkey_05",
         "flag": "us-va",
         "year": "Y3"
     },
     {
         "name": "CrazyMine",
-        "prefix": "",
-        "pronoun": "",
+        "prefix": null,
+        "pronoun": null,
         "icon": "master_00",
         "flag": "us-in",
         "year": "Y2"
     },
     {
         "name": "itssnowy71",
-        "prefix": "",
-        "pronoun": "",
-        "icon": "pacman_00",
+        "prefix": null,
+        "pronoun": null,
+        "icon": "pacman_05",
         "flag": "us",
         "year": "Y1"
     },
     {
         "name": "petebumble",
-        "prefix": "",
-        "pronoun": "",
+        "prefix": null,
+        "pronoun": null,
         "icon": "lucario_00",
         "flag": "us",
         "year": "Y3"
     },
     {
-        "name": "Legend",
-        "prefix": "",
-        "pronoun": "",
+        "name": "legend",
+        "prefix": null,
+        "pronoun": null,
         "icon": "inkling_02",
         "flag": "cn",
         "year": "Y3"
     },
     {
         "name": "boyfranxx",
-        "prefix": "",
-        "pronoun": "",
+        "prefix": null,
+        "pronoun": null,
         "icon": "roy_07",
         "flag": "us-in",
         "year": "Y3"
     },
     {
         "name": "Excalibirb",
-        "prefix": "",
-        "pronoun": "",
+        "prefix": "DaD",
+        "pronoun": null,
         "icon": "yoshi_06",
         "flag": "us-tn",
         "year": "Y1"
     },
     {
         "name": "TheLimeWarrior",
-        "prefix": "",
-        "pronoun": "",
+        "prefix": null,
+        "pronoun": null,
         "icon": "dedede_04",
         "flag": "us-tx",
         "year": "Y1"
     },
     {
         "name": "Ceeb",
-        "prefix": "",
-        "pronoun": "",
+        "prefix": null,
+        "pronoun": null,
         "icon": "gaogaen_00",
         "flag": "us-fl",
         "year": "Y1"

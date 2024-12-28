@@ -1,7 +1,4 @@
-@font-face {
-    font-family: Merriweather;
-    src: url("/fonts/MerriweatherSans.ttf");
-}
+@use "fonts.scss";
 body {
     font-family: Merriweather;
     display: grid;
@@ -60,6 +57,11 @@ body {
             }
         }
     }
+}
+
+input[type=color] {
+    width: 2em;
+    height: 2em;
 }
 
 .header {
@@ -145,4 +147,9 @@ body {
 }
 .null {
     display: none !important;
+}
+
+.small {
+    color: #0008;
+    font-size: 0.8em;
 }

@@ -9,7 +9,7 @@
     <div class="inputs">
         <div class="players"><!-- react generates here --></div>
         <button class="swap_button" onclick="swap_users()">Swap Users</button>
-        <!-- <button onclick="send_to_server()">Submit Players</button> -->
+        <button onclick="send_to_server(0)">Submit Players</button>
     </div>
     <div>
         <div class="player_selector">
@@ -25,9 +25,21 @@
         </div>
     </div>
     <div class="layout_row">
-        <div class="header">Layout:</div><div class="layout_input"><input placeholder="Grand Finals • Best of 5" data-value="game_bar" /></div>
+        <div class="header">Layout:</div>
+        <div>
+        <div class="layout_input"><input placeholder="Grand Finals • Best of 5" data-value="game_bar" /></div>
+        <div class="color_sel">
+            <input type="color" class="color_sel_l" />
+            <input type="color" class="color_sel_r" />
+            <button onclick="send_to_server(1)">Submit Layout</button>
+        </div>
     </div>
-    <button onclick="send_to_server()">GO</button>
+    </div>
+    <div class="comms_row">
+        <input placeholder="comm 1,PREF | comm 2" class="comms_input" /><button onclick="submit_comms()">Update Comms</button><br>
+        <div class="small">Input commentators separated by a comma, and use a | for prefixes</div>
+    </div>
+    <button onclick="send_to_server(-1)">Submit All!</button>
     <script src="external/react.dev.js"></script>
     <script src="external/react-dom.dev.js"></script>
     <script src="elements/control/player.jsx" type="module"></script>

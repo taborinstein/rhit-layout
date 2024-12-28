@@ -1,14 +1,8 @@
-@font-face {
-    font-family: Square;
-    src: url("/fonts/Square.ttf");
-}
+@use "fonts.scss";
 .sar {
     font-family: Square;
     display: inline-flex;
     flex-direction: row;
-    // align-items: center;
-    // justify-content: center;
-    // height: 0;
     .text {
         align-items: center;
         display: flex;

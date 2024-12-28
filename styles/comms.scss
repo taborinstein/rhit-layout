@@ -1,0 +1,44 @@
+@use "fonts.scss";
+.comms {
+    font-family: Merriweather;
+    display: flex;
+    flex-direction: row;
+    color: #ddd;
+    width: 100%;
+    font-size: 1.5em;
+    margin-top: 1.5em;
+    justify-content: space-evenly;
+    .comm {
+        border-radius: 3px;
+        img {
+            height: 1em;
+            margin-right: 5px;
+        }
+        height: 1em;
+        padding: 5px 1em;
+        background-color: #500e;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        // font-size: 0.8em;
+        font-weight: normal;
+        flex-basis: 20%;
+        max-width: 10em;
+        .name {
+            $name_gap: 0.4em;
+            align-items: center;
+            display: inline-flex;
+            gap: $name_gap;
+            div:nth-child(1) {
+                font-weight: 100;
+                color: #f84a;
+                &.nopref {
+                    margin-left: -$name_gap;
+                }
+            }
+            div:nth-child(2) {
+                font-weight: 300;
+            }
+        }
+    }
+}
