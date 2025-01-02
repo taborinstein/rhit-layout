@@ -115,7 +115,7 @@ function send_to_server(n) {
             document.querySelectorAll(".icon_num")[1].value
         }`;
     }
-    if (n == 1 || n == -1)
+    if (n == 1 || n == -1) {
         payload.layout = {
             game_bar: document.querySelector("[data-value=game_bar]").value,
             colors: [
@@ -123,6 +123,11 @@ function send_to_server(n) {
                 document.querySelector(".color_sel_r").value,
             ],
         };
+    }
+
+    if (n == -1) {
+        payload.comms = get_all_comms();
+    }
 
     socket.transmit("update", payload);
 }
@@ -139,12 +144,34 @@ function swap_users() {
     unstuck_icons();
 }
 
+function get_all_comms() {
+    // setup comms_msg array to hold comm objects
+    const comms_msg = [];
+
+    // loop through the comm inputs, adding each as an object to comms_msg array
+    const all_comms = document.querySelectorAll(".comms_block");
+
+    for (const comm of all_comms) {
+        // parse out the prefix and tag
+        const prefix = comm.querySelector(".comms_prefix").value.trim();
+        const tag = comm.querySelector(".comms_tag").value.trim();
+
+        // skip if no tag is provided so it doesn't render a blank comm
+        if (tag === "") {
+            continue;
+        }
+
+        // add the comms object
+        comms_msg.push({prefix, tag});
+    }
+
+    return comms_msg;
+}
+
 function submit_comms() {
+    // send the comms_msg
     socket.transmit("update_comms", {
-        comms: document
-            .querySelector(".comms_input")
-            .value.split(",")
-            .map(x => x.trim()),
+        comms: get_all_comms(),
     });
 }
 
@@ -173,8 +200,20 @@ function socket_handler(type, message) {
                 ] = message.layout.colors;
             }
             if (message.comms) {
-                // comms message
-                document.querySelector(".comms_input").value = message.comms.join(",");
+                const comms = message.comms;
+
+                // get all comm blocks into an array
+                const comms_blocks = document.querySelectorAll(".comms_block");
+
+                // for loop so we can use index to access both comms and comms_blocks at once
+                for (let i = 0; i < comms.length; i++) {
+                    // fill in prefix
+                    comms_blocks[i].querySelector(".comms_prefix").value = comms[i].prefix;
+
+                    // fill in tag
+                    comms_blocks[i].querySelector(".comms_tag").value = comms[i].tag;
+                }
+
             }
             break;
     }
