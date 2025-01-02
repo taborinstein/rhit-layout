@@ -151,6 +151,11 @@ function submit_comms() {
         const prefix = comm.querySelector(".comms_prefix").value.trim();
         const tag = comm.querySelector(".comms_tag").value.trim();
 
+        // skip if no tag is provided so it doesn't render a blank comm
+        if (tag === "") {
+            continue;
+        }
+
         // add the comms object
         comms_msg.push({prefix, tag});
     }
