@@ -1,17 +1,19 @@
 export default function gen_comms(comms) {
     return (
         <>
-            {comms.map(c => {
-                let parts = c.split("|").map(x => x.trim());
-                let user = parts.pop();
-                let pref = "";
-                if (parts.length > 0) pref = parts[0];
+            {comms.map((comm, index) => {
+                // need index for unique keys
+
+                // get out prefix and tag from comm
+                const pref = comm.prefix;
+                const tag = comm.tag;
+
                 return (
-                    <div key={c} className="comm">
+                    <div key={index} className="comm">
                         <img src="icons/internal/mic.svg" />
                         <div className="name">
-                            <div className={pref == "" ? "nopref" : ""}>{pref}</div>
-                            <div>{user}</div>
+                            <div className="pref">{pref}</div>
+                            <div className="tag">{tag}</div>
                         </div>
                     </div>
                 );

@@ -18,16 +18,29 @@
         function socket_handler(type, message) {
             switch (type) {
                 case "fetch_current":
+                    const comms_msg = [];
+
+                    const all_comm_names = document.querySelectorAll(".name");
+
+                    // parse out prefix and tags from comm names
+                    for (const comm_name of all_comm_names) {
+                        const prefix = comm_name.querySelector(".pref").innerText; // will be "" if no pref
+                        const tag = comm_name.querySelector(".tag").innerText;
+
+                        comms_msg.push({prefix, tag});
+                    }
+
                     socket.transmit("fetch_current_resp", {
-                        comms: [...document.querySelectorAll(".name")].map(x => x.children[0].classList.contains("nopref") > 1 ? (x.children[0].innerText + " | " + x.children[1].innerText) : x.children[1].innerText)
-                    })
+                        comms: comms_msg,
+                    });
+
                     break;
                 case "update_comms":
                     ReactDOM.render(gen_comms(message.comms), document.querySelector(".comms"));
                     break;
             }
         }
-        render_comms(["xtal", "ROSE|zzz"]);
+        render_comms([{prefix: "", tag: "xtal"}, {prefix: "ROSE", tag: "zzz"}]);
 
     </script>
 </body>
