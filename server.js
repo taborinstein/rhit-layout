@@ -53,20 +53,20 @@ function is_already_built(path, new_path) {
     return fs.existsSync(new_path) && fs.lstatSync(path).mtimeMs < fs.lstatSync(new_path).mtimeMs;
 }
 function compile(path) {
-    path = Path.join("./", path);
+    if(!path.startsWith(__dirname)) path = Path.join(__dirname, path);
     let ext = path.split(".").pop();
-    let new_path = Path.join("./.cache", path).replace(new RegExp(ext + "$"), compile_map[ext]);
+    let new_path = Path.join(__dirname, ".cache", path).replace(new RegExp(ext + "$"), compile_map[ext]);
     if (ext == "scss") {
         // handle @use so saving a sheet that isn't directly linked works
         let sass = fs.readFileSync(path).toString();
-        let parent = path.replace(/\/[^\/]*$/, "");
+        let parent = Path.basename(Path.dirname(path));
         let uses = sass
             .split(";")
             .map(x => x.trim())
             .filter(x => x.startsWith("@use"))
             .map(x => x.split(" ")[1].slice(1, -1));
         for (let use of uses)
-            if (!is_already_built(parent + "/" + use, new_path)) {
+            if (!is_already_built(Path.join(parent, use), new_path)) {
                 try {
                     fs.unlinkSync(new_path);
                 } catch (_) {
@@ -78,7 +78,7 @@ function compile(path) {
     if (!fs.existsSync(".cache")) fs.mkdirSync(".cache");
     if (is_already_built(path, new_path)) return new_path;
     vo(1, `Compiling ${path} => ${new_path}`);
-    let dir = new_path.replace(/\/[^\/]*$/, "");
+    let dir = Path.basename(Path.dirname(new_path));
     if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
     switch (ext) {
         case "jsx":
