@@ -36,17 +36,9 @@
     </div>
     </div>
     <div class="comms_row">
-        <div class="comms_label">Commentator #1</div>
-        <div class="comms_block">
-            <input type="text" placeholder="Prefix (leave blank if none)" class="comms_prefix" />
-            <input type="text" placeholder="Tag/Name" class="comms_tag" />
-        </div>
-        <div class="comms_label">Commentator #2</div>
-        <div class="comms_block">
-            <input type="text" placeholder="Prefix (leave blank if none)" class="comms_prefix" />
-            <input type="text" placeholder="Tag/Name" class="comms_tag" />
-        </div>
-        <button class="comms_submit" onclick="submit_comms()">Update Comms</button>
+        <div class="comms_gen"><!-- react generates here --></div>
+        <button class="comms_add" onclick="add_comm()">Add Commentator</button><br>
+        <button class="comms_submit" onclick="submit_comms()">Update Commentators</button>
     </div>
     <button onclick="send_to_server(-1)">Submit All!</button>
     <script src="external/react.dev.js"></script>
@@ -55,6 +47,36 @@
     <script src="scripts/chara_data.js"></script>
     <script src="scripts/socket.js"></script>
     <script src="scripts/control.js"></script>
+    <script type="module">
+        import comms_block from "/elements/control/comms_block.jsx";
+
+        // logic for adding commentators
+        let num_comms = 0;
+
+        function add_comm() {
+            // get comms gen area
+            const comms_gen = document.querySelector(".comms_gen");
+
+            // setup for new comm container
+            const new_comm_container = document.createElement("div");
+            
+            // add new comm container
+            comms_gen.appendChild(new_comm_container);
+
+            // update num of comms
+            num_comms++;
+
+            // render the new comm container, using the num of comms as the id
+            ReactDOM.render(comms_block(num_comms), new_comm_container);
+        }
+
+        // generate 2 default comms
+        add_comm(); // #1
+        add_comm(); // #2
+
+        // add the function add_comm to the window namespace so the add button can access it
+        window.add_comm = add_comm;
+    </script>
 </body>
 
 </html>
