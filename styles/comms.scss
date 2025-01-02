@@ -16,7 +16,12 @@
         }
         height: 1em;
         padding: 5px 1em;
-        background-color: #500e;
+        &:nth-child(2n) {
+            background-color: var(--color-r);
+        }
+        &:nth-child(2n+1) {
+            background-color: var(--color-l);
+        }
         display: flex;
         align-items: center;
         justify-content: center;
