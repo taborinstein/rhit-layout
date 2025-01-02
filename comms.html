@@ -38,6 +38,9 @@
                 case "update_comms":
                     ReactDOM.render(gen_comms(message.comms), document.querySelector(".comms"));
                     break;
+                case "update":
+                    ReactDOM.render(gen_comms(message.comms), document.querySelector(".comms"));
+                    break;
             }
         }
         render_comms([{prefix: "", tag: "xtal"}, {prefix: "ROSE", tag: "zzz"}]);

@@ -115,7 +115,7 @@ function send_to_server(n) {
             document.querySelectorAll(".icon_num")[1].value
         }`;
     }
-    if (n == 1 || n == -1)
+    if (n == 1 || n == -1) {
         payload.layout = {
             game_bar: document.querySelector("[data-value=game_bar]").value,
             colors: [
@@ -123,6 +123,11 @@ function send_to_server(n) {
                 document.querySelector(".color_sel_r").value,
             ],
         };
+    }
+
+    if (n == -1) {
+        payload.comms = get_all_comms();
+    }
 
     socket.transmit("update", payload);
 }
@@ -139,7 +144,7 @@ function swap_users() {
     unstuck_icons();
 }
 
-function submit_comms() {
+function get_all_comms() {
     // setup comms_msg array to hold comm objects
     const comms_msg = [];
 
@@ -160,9 +165,13 @@ function submit_comms() {
         comms_msg.push({prefix, tag});
     }
 
+    return comms_msg;
+}
+
+function submit_comms() {
     // send the comms_msg
     socket.transmit("update_comms", {
-        comms: comms_msg,
+        comms: get_all_comms(),
     });
 }
 
