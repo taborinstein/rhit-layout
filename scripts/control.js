@@ -172,7 +172,17 @@ function submit_comms() {
     // send the comms_msg
     socket.transmit("update_comms", {
         comms: get_all_comms(),
+        layout: {
+            colors: get_layout_colors(),
+        },
     });
+}
+
+function get_layout_colors() {
+    return [
+        document.querySelector(".color_sel_l").value,
+        document.querySelector(".color_sel_r").value,
+    ];
 }
 
 function socket_handler(type, message) {
@@ -194,10 +204,7 @@ function socket_handler(type, message) {
                 load_from_data(message.p1, 0);
                 load_from_data(message.p2, 1);
                 document.querySelector("[data-value=game_bar]").value = message.layout.game_bar;
-                [
-                    document.querySelector(".color_sel_l").value,
-                    document.querySelector(".color_sel_r").value,
-                ] = message.layout.colors;
+                message.layout.colors = get_layout_colors();
             }
             if (message.comms) {
                 const comms = message.comms;

@@ -38,6 +38,7 @@
     <div class="comms_row">
         <div class="comms_gen"><!-- react generates here --></div>
         <button class="comms_add" onclick="add_comm()">Add Commentator</button><br>
+        <button class="comms_add" onclick="remove_comm()">Remove Commentator</button><br>
         <button class="comms_submit" onclick="submit_comms()">Update Commentators</button>
     </div>
     <button onclick="send_to_server(-1)">Submit All!</button>
@@ -70,12 +71,25 @@
             ReactDOM.render(comms_block(num_comms), new_comm_container);
         }
 
+        function remove_comm() {
+            // get comms gen area
+            const comms_gen = document.querySelector(".comms_gen");
+            
+            // remove last comm container
+            comms_gen.removeChild(comms_gen.lastElementChild);
+
+            // update num of comms
+            num_comms--;
+        }
+
         // generate 2 default comms
         add_comm(); // #1
         add_comm(); // #2
 
-        // add the function add_comm to the window namespace so the add button can access it
+        // add the functions add_comm and remove_comm to the window namespace so the buttons can access
         window.add_comm = add_comm;
+        window.remove_comm = remove_comm;
+        
     </script>
 </body>
 
