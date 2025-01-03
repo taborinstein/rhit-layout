@@ -55,7 +55,11 @@ function is_already_built(path, new_path) {
 function compile(path) {
     if(!path.startsWith(__dirname)) path = Path.join(__dirname, path);
     let ext = path.split(".").pop();
-    let new_path = Path.join(__dirname, ".cache", path).replace(new RegExp(ext + "$"), compile_map[ext]);
+
+    // get path relative to dirname
+    let relative_path = Path.relative(__dirname, path);
+
+    let new_path = Path.join(__dirname, ".cache", relative_path).replace(new RegExp(ext + "$"), compile_map[ext]);
     if (ext == "scss") {
         // handle @use so saving a sheet that isn't directly linked works
         let sass = fs.readFileSync(path).toString();
