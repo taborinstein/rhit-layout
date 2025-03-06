@@ -5,7 +5,7 @@ window.onload = () => {
     ReactDOM.render(
         <>
             <div className="floating">
-                <SAR num={13} />
+                <SAR num={18} />
                 <div className="link">
                     <img src="icons/internal/twitch.svg" />
                     /rhitssb
@@ -77,6 +77,7 @@ function socket_handler(type, message) {
                 document.querySelector("[data-identifier=game_bar]").innerText =
                     message.layout.game_bar;
                 set_colors(message.layout.colors);
+                if(message.layout.num) document.querySelector(".sar .num").innerText = message.layout.num;
             }
             break;
         case "fetch_current":

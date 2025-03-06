@@ -141,6 +141,14 @@ input[type=color] {
         }
     }
 }
+.comms_block {
+    .comms_prefix {
+        width: 4em;
+    }
+}
+.comms_add {
+    width: 1.5em;
+}
 .layout_row {
     display: flex;
     flex-direction: row;

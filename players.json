@@ -3,7 +3,7 @@
         "name": "Koko",
         "prefix": "ROSE",
         "pronoun": "she/her",
-        "icon": "younglink_02",
+        "icon": "wario_02",
         "flag": "us-tn",
         "year": "Y2"
     },
@@ -11,23 +11,15 @@
         "name": "door 2",
         "prefix": null,
         "pronoun": "he/him",
-        "icon": "pitb_02",
+        "icon": "pit_04",
         "flag": "us-in",
         "year": "Y2"
     },
     {
-        "name": "pyukumuku",
-        "prefix": null,
-        "pronoun": "she/her",
-        "icon": "wiifit_04",
-        "flag": "us-tx",
-        "year": "Y2"
-    },
-    {
         "name": "xtal",
-        "prefix": null,
+        "prefix": "perc 30 gaming",
         "pronoun": "he/him",
-        "icon": "wolf_04",
+        "icon": "tantan_01",
         "flag": "us-il",
         "year": "Y2"
     },
@@ -40,18 +32,10 @@
         "year": "Y2"
     },
     {
-        "name": "TheAudacity",
-        "prefix": null,
-        "pronoun": "any",
-        "icon": "gamewatch_00",
-        "flag": "gu",
-        "year": "Y1"
-    },
-    {
         "name": "quandale",
         "prefix": "ROSE",
         "pronoun": "he/him",
-        "icon": "edge_07",
+        "icon": "snake_01",
         "flag": "us-in",
         "year": "Y1"
     },
@@ -59,17 +43,9 @@
         "name": "zzz",
         "prefix": "ROSE",
         "pronoun": "he/him",
-        "icon": "ptrainer_06",
+        "icon": "packun_06",
         "flag": "us-wa",
         "year": "Y4"
-    },
-    {
-        "name": "Joycon Jesus",
-        "prefix": null,
-        "pronoun": "they/them",
-        "icon": "samusd_06",
-        "flag": "us-il",
-        "year": "Y2"
     },
     {
         "name": "ashush",
@@ -88,14 +64,6 @@
         "year": "Y3"
     },
     {
-        "name": "Rhea",
-        "prefix": null,
-        "pronoun": "they/she",
-        "icon": "ganon_06",
-        "flag": "us-in",
-        "year": "Y2"
-    },
-    {
         "name": "MagicBanana",
         "prefix": null,
         "pronoun": "he/him",
@@ -107,25 +75,17 @@
         "name": "Kaos",
         "prefix": null,
         "pronoun": null,
-        "icon": "miifighter_00",
+        "icon": "buddy_02",
         "flag": "us-mn",
         "year": "Y1"
     },
     {
         "name": "Gravy",
-        "prefix": null,
+        "prefix": "ROSE",
         "pronoun": "he/him",
         "icon": "dolly_06",
         "flag": "us-il",
         "year": "Y2"
-    },
-    {
-        "name": "2400Hours",
-        "prefix": null,
-        "pronoun": "he/him",
-        "icon": "edge_00",
-        "flag": "us-in",
-        "year": "Grad"
     },
     {
         "name": "dongkonkey",
@@ -137,7 +97,7 @@
     },
     {
         "name": "PudgyDragn",
-        "prefix": null,
+        "prefix": "ROSE",
         "pronoun": null,
         "icon": "yoshi_01",
         "flag": "us-in",
@@ -164,20 +124,12 @@
         "prefix": null,
         "pronoun": null,
         "icon": "pacman_05",
-        "flag": "us",
+        "flag": "us-in",
         "year": "Y1"
     },
     {
-        "name": "petebumble",
-        "prefix": null,
-        "pronoun": null,
-        "icon": "lucario_00",
-        "flag": "us",
-        "year": "Y3"
-    },
-    {
         "name": "legend",
-        "prefix": null,
+        "prefix": "ROSE",
         "pronoun": null,
         "icon": "inkling_02",
         "flag": "cn",
@@ -195,13 +147,13 @@
         "name": "Excalibirb",
         "prefix": "DaD",
         "pronoun": null,
-        "icon": "yoshi_06",
+        "icon": "rosetta_00",
         "flag": "us-tn",
         "year": "Y1"
     },
     {
         "name": "TheLimeWarrior",
-        "prefix": null,
+        "prefix": "ROSE",
         "pronoun": null,
         "icon": "dedede_04",
         "flag": "us-tx",
@@ -211,8 +163,16 @@
         "name": "Ceeb",
         "prefix": null,
         "pronoun": null,
-        "icon": "dolly_07",
+        "icon": "demon_02",
         "flag": "us-fl",
+        "year": "Y1"
+    },
+    {
+        "name": "Carmine",
+        "prefix": null,
+        "pronoun": null,
+        "icon": "cloud_00",
+        "flag": "us-pa",
         "year": "Y1"
     }
 ]

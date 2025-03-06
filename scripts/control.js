@@ -55,6 +55,8 @@ function filter_list(input) {
     });
 }
 function load_selected(n) {
+    document.querySelectorAll(".score")[0].value = 0;
+    document.querySelectorAll(".score")[1].value = 0;
     load_from_data(JSON.parse(document.querySelector(".entry.selected").dataset.data), n);
 }
 function load_from_data(data, n) {

@@ -104,7 +104,7 @@ Bun.serve({
     fetch(req, serv) {
         if (serv.upgrade(req)) return; // no clue what this does but it makes the websocket work
 
-        let path = req.url.replace("http://localhost:" + PORT, "");
+        let path = req.url.replace(/https?:\/\/[^\/]+/, "");
 
         // handle special files
         if (path.endsWith(".jsx") || path.endsWith(".scss")) {
