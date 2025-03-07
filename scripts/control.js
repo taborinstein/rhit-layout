@@ -119,6 +119,7 @@ function send_to_server(n) {
     }
     if (n == 1 || n == -1) {
         payload.layout = {
+            num: document.querySelector(".sar_sel").value,
             game_bar: document.querySelector("[data-value=game_bar]").value,
             colors: [
                 document.querySelector(".color_sel_l").value,
@@ -205,8 +206,15 @@ function socket_handler(type, message) {
                 // layout message
                 load_from_data(message.p1, 0);
                 load_from_data(message.p2, 1);
+            }
+            if(message.layout) {
                 document.querySelector("[data-value=game_bar]").value = message.layout.game_bar;
-                message.layout.colors = get_layout_colors();
+                [
+                    document.querySelector(".color_sel_l").value,
+                    document.querySelector(".color_sel_r").value,
+                ] = message.layout.colors;
+                document.querySelector(".sar_sel").value = message.layout.num;
+                // document.querySelector("")
             }
             if (message.comms) {
                 const comms = message.comms;

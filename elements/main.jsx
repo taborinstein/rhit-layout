@@ -85,6 +85,7 @@ function socket_handler(type, message) {
                 p1: JSON.parse(document.querySelectorAll(".side")[0].dataset.store),
                 p2: JSON.parse(document.querySelectorAll(".side")[1].dataset.store),
                 layout: {
+                    num: +document.querySelector(".sar .num").innerText,
                     game_bar: document.querySelector("[data-identifier=game_bar]").innerText,
                     colors: [
                         document.documentElement.style
