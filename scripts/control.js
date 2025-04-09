@@ -74,7 +74,7 @@ function load_from_data(data, n) {
 }
 
 function load_seeds(data) {
-    console.log(data)
+    for(let p of player_data) p.seed = undefined;
     for (let seed of data) {
         let found = player_data.find(x => x.id == seed.id); //  || x.name.toLowerCase() == seed.user.toLowerCase()
         if (found) {
