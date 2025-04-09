@@ -89,4 +89,5 @@ const CHARA_DATA = {
     "Young Link": "younglink",
     Zelda: "zelda",
     "Zero Suit Samus": "szerosuit",
+    "Random": "random"
 };

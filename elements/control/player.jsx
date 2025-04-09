@@ -49,7 +49,7 @@ function add_player_input(i) {
         let container = document.querySelectorAll(".icons")[i];
         container.innerHTML = "";
         let skin_inp = document.querySelectorAll(".icon_num")[i];
-        let num = key.includes("miifighter") ? 2 : key.includes("mii") ? 1 : 8;
+        let num = key.includes("miifighter") ? 2 : key.includes("mii") || key == "random" ? 1 : 8;
         if (skin_inp.value > num - 1) skin_inp.value = num - 1;
         for (let idx = 0; idx < num; idx++) {
             let img = new Image();

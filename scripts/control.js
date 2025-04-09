@@ -5,9 +5,11 @@ window.onload = () => {
     socket.init(socket_handler);
     setTimeout(_ => {
         for (let k in CHARA_DATA)
-            for (let i = 0; i < 8; i++)
-                if (i < 1 || !k.includes("Mii") || (i < 2 && k.includes("Brawler")))
-                    new Image().src = `/icons/chara_2_${CHARA_DATA[k]}_0${i}.png`;
+            for (let i = 0; i < 8; i++) {
+                if((k == "Mii Gunner" || k == "Mii Swordfighter" || k == "Random") && i > 0) continue;
+                if((k == "Mii Brawler") && i > 1) continue;
+                new Image().src = `/icons/chara_2_${CHARA_DATA[k]}_0${i}.png`;
+            }
     }, 1000); // preload images after 1s
     let filter = document.querySelector(".player_selector > input");
     filter.value = "";
@@ -72,13 +74,19 @@ function load_from_data(data, n) {
 }
 
 function load_seeds(data) {
+    console.log(data)
     for (let seed of data) {
-        let found = player_data.find(x => x.name.toLowerCase() == seed.user.toLowerCase());
-        if (found) found.seed = seed.seed;
-        else
+        let found = player_data.find(x => x.id == seed.id); //  || x.name.toLowerCase() == seed.user.toLowerCase()
+        if (found) {
+            found.seed = seed.seed;
+            found.name = seed.user;
+            found.prefix = seed.prefix;
+
+        } else
             player_data.push({
                 guest: true,
                 seed: seed.seed,
+                prefix: seed.prefix,
                 name: seed.user,
                 icon: "random_00",
             });
@@ -108,8 +116,8 @@ function send_to_server(n) {
         payload.p1 = get_player_json(0);
         payload.p2 = get_player_json(1);
         // n -> Seed n
-        if (payload.p1.seed) payload.p1.seed = "Seed " + payload.p1.seed;
-        if (payload.p2.seed) payload.p2.seed = "Seed " + payload.p2.seed;
+        if (payload.p1.seed && !payload.p1.seed.startsWith("Seed ")) payload.p1.seed = "Seed " + payload.p1.seed;
+        if (payload.p2.seed && !payload.p2.seed.startsWith("Seed ")) payload.p2.seed = "Seed " + payload.p2.seed;
         payload.p1.icon = `${document.querySelectorAll("select")[0].value}_0${
             document.querySelectorAll(".icon_num")[0].value
         }`;
