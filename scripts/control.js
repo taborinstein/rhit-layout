@@ -63,6 +63,10 @@ function load_selected(n) {
 }
 function load_from_data(data, n) {
     document.querySelectorAll("[data-value=seed]")[n].value = ""; // clear seed first
+    document.querySelectorAll("[data-value=year]")[n].value = ""; 
+    document.querySelectorAll("[data-value=pronoun]")[n].value = ""; 
+    document.querySelectorAll("[data-value=flag]")[n].value = ""; 
+    document.querySelectorAll("[data-value=prefix]")[n].value = ""; 
     for (let key in data) {
         let e = document.querySelectorAll(`[data-value=${key}`)[n];
         if (e) e.value = data[key];

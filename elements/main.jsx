@@ -1,6 +1,7 @@
 import Side from "./side.jsx";
 import SAR from "./sar.jsx";
 import Center from "./center.jsx";
+
 window.onload = () => {
     ReactDOM.render(
         <>
@@ -42,6 +43,7 @@ window.onload = () => {
     set_colors(["#550000", "#550000"]);
     socket.init(socket_handler);
 };
+
 function set_colors(data) {
     document.documentElement.style.setProperty("--color-l", data[0] + "ee");
     document.documentElement.style.setProperty("--color-r", data[1] + "ee");

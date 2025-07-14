@@ -30,3 +30,8 @@ export default async function fetch_seeds(url, tok) {
         user: x.entrant.participants[0].gamerTag,
     }));
 }
+if (process.argv[1] === import.meta.filename) {
+    console.log(await fetch_seeds(
+        "https://www.start.gg/tournament/smash-rose-24/event/ssbu-singles/brackets/1953105/2867477", JSON.parse((await import("fs")).readFileSync("auth.json").toString()).token
+    ));
+}

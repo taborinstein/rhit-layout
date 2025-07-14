@@ -2,7 +2,7 @@
     {
         "name": "Koko",
         "prefix": "ROSE",
-        "pronoun": "she/they",
+        "pronoun": "she/her",
         "icon": "wario_02",
         "flag": "us-tn",
         "year": "Y2",
@@ -214,6 +214,15 @@
         "flag": null,
         "year": "Y1",
         "id": 4579726
+    },
+    {
+        "name": "EZBREEZY!",
+        "prefix": null,
+        "pronoun": "he/him",
+        "icon": "daisy_00",
+        "flag": "us-in",
+        "year": null,
+        "id": 467055
     }
 ]
 
