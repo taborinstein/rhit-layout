@@ -47,7 +47,7 @@ const input_svg = {
                 <ellipse cx="100" cy="100" rx="50" />
                 <ellipse cx="100" cy="100" rx="28" data-stick="l" />
                 <rect x="60" y="22" width="80" height="16" rx="8" data-button="l" />
-                <rect x="150" y="22" width="40" height="16" rx="8" data-button="zr" />
+                <rect x="150" y="22" width="40" height="16" rx="8" data-button="zl" />
             </g>
             <g transform="translate(-10 10)">
                 <ellipse cx="230" cy="100" rx="40" />
