@@ -4,6 +4,8 @@ import babel from "@babel/core";
 import * as sass from "sass";
 import Path from "path";
 
+import {start_tcp_listener} from "./tcp_listener.js"
+
 import fetch_seeds from "./sgg.js";
 let auth = {};
 
@@ -98,6 +100,7 @@ function compile(path) {
     }
     return new_path;
 }
+start_tcp_listener(sockets);
 Bun.serve({
     port: PORT,
 
@@ -114,6 +117,7 @@ Bun.serve({
 
         // custom paths
         if (path == "/") return new Response(Bun.file("index.html"));
+        if (path == "/inputs") return new Response(Bun.file("inputs.html"));
         if (path == "/control") return new Response(Bun.file("control.html"));
         if (path == "/comms") return new Response(Bun.file("comms.html"));
 

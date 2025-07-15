@@ -1,0 +1,41 @@
+:root {
+    --stroke-w: 4;
+}
+
+svg {
+    /* background: #dedede; */
+    
+    stroke: #ffaaaa;
+    fill: #ffdddd;
+    margin-bottom: 20px;
+    fill-opacity: 0;
+    
+
+    * {
+        stroke-width: var(--stroke-w);
+        // fill: none;
+        filter: drop-shadow(0px 0px 2px rgba(0, 0, 0, 1)) drop-shadow(0px 0px 2px rgba(0, 0, 0, 1)) drop-shadow(0px 0px 2px rgba(0, 0, 0, 0.5));
+    }
+
+    .stroke-5 {
+        stroke-width: calc(var(--stroke-w) * 1.25px);
+    }
+}
+.inputs_container {
+    position: absolute;
+    bottom: 0;
+    // padding: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    .inputs {
+        &:nth-child(2) > svg {
+            stroke: #aaaaff !important;
+            fill: #ddddff !important;
+        }
+    }
+}
+svg *.filled {
+    fill-opacity: 1 !important;
+}
