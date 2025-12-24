@@ -6,7 +6,7 @@ window.onload = () => {
     ReactDOM.render(
         <>
             <div className="floating">
-                <SAR num={18} />
+                <SAR num={29} />
                 <div className="link">
                     <img src="icons/internal/twitch.svg" />
                     /rhitssb
@@ -24,7 +24,7 @@ window.onload = () => {
     );
     update_player(0, {
         name: "quandale",
-        pronoun: "he/him",
+        pronoun: "she/her",
         prefix: "ROSE",
         icon: "edge_07",
         flag: "us-in",
@@ -40,7 +40,7 @@ window.onload = () => {
         year: "Y2",
         social: null,
     });
-    set_colors(["#550000", "#550000"]);
+    set_colors(["#550000", "#000044"]);
     socket.init(socket_handler);
 };
 

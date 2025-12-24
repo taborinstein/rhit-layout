@@ -29,13 +29,13 @@ export function start_tcp_listener(socket_handler) {
                     return;
                 }
                 let lx = data[1];
-                if (lx > 128) lx -= 256;
+                if (lx > 127) lx -= 256;
                 let ly = data[2];
-                if (ly > 128) ly -= 256;
+                if (ly > 127) ly -= 256;
                 let rx = data[3];
-                if (rx > 128) rx -= 256;
+                if (rx > 127) rx -= 256;
                 let ry = data[4];
-                if (ry > 128) ry -= 256;
+                if (ry > 127) ry -= 256;
 
                 stick_states[n].ls = { x: lx, y: ly };
                 stick_states[n].rs = { x: rx, y: ry };

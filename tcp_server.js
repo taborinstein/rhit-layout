@@ -5,7 +5,7 @@ let send = m => {
     listeners.forEach(x => x.write(m));
 };
 Bun.listen({
-    hostname: "127.0.0.1",
+    hostname: "0.0.0.0",
     port: 7878,
     socket: {
         data(socket, data) {

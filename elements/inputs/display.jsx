@@ -76,6 +76,7 @@ export default function Display(props) {
                 if(!db) {
                     continue
                 }
+                console.log(data.rs.y)
                 if(data.buttons.includes(db.dataset.button)) db.classList.add("filled");
                 else db.classList.remove("filled");
             }

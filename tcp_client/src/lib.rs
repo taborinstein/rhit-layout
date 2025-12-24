@@ -1,7 +1,7 @@
 use skyline::{self, nn::diag::GetAllModuleInfo};
 use std::io::Write;
 use std::net::TcpStream;
-use smash::app::{lua_bind::{CameraModule::get_player_no, *}, BattleObjectModuleAccessor};
+use smash::{app::{lua_bind::{CameraModule::get_player_no, *}, BattleObjectModuleAccessor}, lua2cpp::L2CFighterAnimcmdEffectCommon_effect_AuraHitF};
 use ninput;
 mod fim;
 use fim::*;
@@ -48,9 +48,8 @@ impl Store {
         Store { tcp: None, inputs: [PlayerInput::new(); 8] }
     }
     pub fn open(&mut self) {
-        self.tcp = Some(TcpStream::connect("127.0.0.1:7878").unwrap());
+        self.tcp = Some(TcpStream::connect("137.112.216.150:7878").unwrap());
         self.tcp.as_mut().unwrap().set_nonblocking(true);
-        
     }
     pub fn update_controller(&mut self, 
         n: usize, 
@@ -158,8 +157,18 @@ pub fn main() {
         }
     }
     skyline::install_hook!(handle_final_input_mapping);
+    // skyline::install_hook!(is_ready_go);
 }
 
+
+
+#[skyline::hook(replace = smash::app::sv_information::is_ready_go)]
+pub unsafe fn is_ready_go() -> bool {
+    let ret = original!()();
+    println!("AAAA");
+    STORE.as_mut().unwrap().open();
+    ret
+}
 
 #[skyline::hook(offset = 0x1750f70)]
 pub unsafe fn handle_final_input_mapping(
@@ -169,6 +178,7 @@ pub unsafe fn handle_final_input_mapping(
     controller_struct: &mut SomeControllerStruct,
     arg: bool,
 ) {
+    
     
     original!()(mappings, player_idx, out, controller_struct, arg);
     let b_bit_0: u8 = 0 | (controller_struct.controller.current_buttons.dpad_up() as u8) << 0 

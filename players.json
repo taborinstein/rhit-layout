@@ -3,18 +3,18 @@
         "name": "Koko",
         "prefix": "ROSE",
         "pronoun": "she/her",
-        "icon": "wario_02",
+        "icon": "younglink_02",
         "flag": "us-tn",
-        "year": "Y2",
+        "year": "Y3",
         "id": 4072459
     },
     {
         "name": "door 2",
         "prefix": null,
         "pronoun": "he/him",
-        "icon": "pit_04",
+        "icon": "pitb_02",
         "flag": "us-in",
-        "year": "Y2",
+        "year": "Y3",
         "id": 2717524
     },
     {
@@ -23,7 +23,7 @@
         "pronoun": "he/him",
         "icon": "tantan_01",
         "flag": "us-il",
-        "year": "Y2",
+        "year": "Y3",
         "id": 3329252
     },
     {
@@ -32,16 +32,16 @@
         "pronoun": "they/them",
         "icon": "gekkouga_04",
         "flag": "us-ca",
-        "year": "Y2",
+        "year": "Y3",
         "id": 3622636
     },
     {
         "name": "quandale",
         "prefix": "ROSE",
-        "pronoun": "he/him",
-        "icon": "snake_01",
+        "pronoun": "she/her",
+        "icon": "edge_00",
         "flag": "us-in",
-        "year": "Y1",
+        "year": "Y2",
         "id": 3646397
     },
     {
@@ -50,7 +50,7 @@
         "pronoun": "he/him",
         "icon": "packun_06",
         "flag": "us-wa",
-        "year": "Y4",
+        "year": null,
         "id": 3623340
     },
     {
@@ -59,7 +59,7 @@
         "pronoun": "he/him",
         "icon": "zelda_02",
         "flag": "us-nc",
-        "year": "Y2",
+        "year": "Y3",
         "id": 4303779
     },
     {
@@ -68,7 +68,7 @@
         "pronoun": "he/him",
         "icon": "pit_04",
         "flag": "us-il",
-        "year": "Y3",
+        "year": "Y4",
         "id": 3971122
     },
     {
@@ -77,7 +77,7 @@
         "pronoun": "he/him",
         "icon": "palutena_00",
         "flag": "us-or",
-        "year": "Y1",
+        "year": "Y2",
         "id": 4303891
     },
     {
@@ -86,16 +86,16 @@
         "pronoun": null,
         "icon": "buddy_02",
         "flag": "us-mn",
-        "year": "Y1",
+        "year": "Y2",
         "id": 4325858
     },
     {
         "name": "Gravy",
         "prefix": "ROSE",
         "pronoun": "he/him",
-        "icon": "dolly_06",
+        "icon": "dolly_05",
         "flag": "us-il",
-        "year": "Y2",
+        "year": "Y3",
         "id": 3464128
     },
     {
@@ -104,7 +104,7 @@
         "pronoun": null,
         "icon": "donkey_01",
         "flag": "us-il",
-        "year": "Y3",
+        "year": "Y4",
         "id": 3415833
     },
     {
@@ -113,7 +113,7 @@
         "pronoun": null,
         "icon": "yoshi_01",
         "flag": "us-in",
-        "year": "Y2",
+        "year": "Y3",
         "id": 3827415
     },
     {
@@ -122,7 +122,7 @@
         "pronoun": null,
         "icon": "donkey_05",
         "flag": "us-va",
-        "year": "Y3",
+        "year": "Y4",
         "id": 1714744
     },
     {
@@ -131,7 +131,7 @@
         "pronoun": null,
         "icon": "master_00",
         "flag": "us-in",
-        "year": "Y2",
+        "year": "Y3",
         "id": 3743409
     },
     {
@@ -140,7 +140,7 @@
         "pronoun": null,
         "icon": "pacman_05",
         "flag": "us-in",
-        "year": "Y1",
+        "year": "Y2",
         "id": 3509155
     },
     {
@@ -149,7 +149,7 @@
         "pronoun": null,
         "icon": "inkling_02",
         "flag": "cn",
-        "year": "Y3",
+        "year": "Y4",
         "id": 2681532
     },
     {
@@ -158,7 +158,7 @@
         "pronoun": null,
         "icon": "roy_07",
         "flag": "us-in",
-        "year": "Y3",
+        "year": "Y4",
         "id": 4218561
     },
     {
@@ -167,7 +167,7 @@
         "pronoun": "he/him",
         "icon": "rosetta_00",
         "flag": "us-tn",
-        "year": "Y1",
+        "year": "Y2",
         "id": 2231548
     },
     {
@@ -176,16 +176,16 @@
         "pronoun": null,
         "icon": "dedede_04",
         "flag": "us-tx",
-        "year": "Y1",
+        "year": "Y2",
         "id": 3452328
     },
     {
-        "name": "Ceeb",
+        "name": "DRE4D",
         "prefix": null,
         "pronoun": null,
-        "icon": "demon_02",
+        "icon": "pickel_04",
         "flag": "us-fl",
-        "year": "Y1",
+        "year": "Y2",
         "id": 4387823
     },
     {
@@ -194,7 +194,7 @@
         "pronoun": null,
         "icon": "pythra_00",
         "flag": "us-pa",
-        "year": "Y1",
+        "year": "Y2",
         "id": 4507750
     },
     {
@@ -203,17 +203,17 @@
         "pronoun": null,
         "icon": "captain_04",
         "flag": "us-tx",
-        "year": "Y3",
+        "year": "Y4",
         "id": 3527279
     },
     {
-        "name": "HungriestBox",
+        "name": "Nivrap",
         "prefix": null,
-        "pronoun": null,
-        "icon": "random_00",
-        "flag": null,
-        "year": "Y1",
-        "id": 4579726
+        "pronoun": "she/her",
+        "icon": "samus_05",
+        "flag": "us-in",
+        "year": null,
+        "id": 1204818
     },
     {
         "name": "EZBREEZY!",
@@ -223,6 +223,43 @@
         "flag": "us-in",
         "year": null,
         "id": 467055
+    }, 
+    {
+        "name": "lenoir",
+        "prefix": null,
+        "pronoun": "she/they",
+        "icon": "packun_07",
+        "flag": "us-tx",
+        "year": "Y2",
+        "id": 4317794
+    },
+    {
+        "name": "Maul",
+        "prefix": null,
+        "pronoun": "he/she/they",
+        "icon": "purin_04",
+        "flag": "us-mn",
+        "year": "Y1",
+        "id": 4960492
+    },
+    {
+        "name": "The Stankmaster",
+        "prefix": null,
+        "pronoun": null,
+        "icon": "luigi_04",
+        "flag": "us-in",
+        "year": null,
+        "id": 4611995
+    },
+    {
+        "name": "fruitsella",
+        "prefix": null,
+        "pronoun": "he/him",
+        "icon": "lucario_05",
+        "flag": null,
+        "year": "Y4",
+        "id": null
     }
 ]
+
 

@@ -5,6 +5,8 @@ body {
     grid-template-columns: auto auto;
     gap: 20px;
     width: 700px; // mods, kill this guy (with hammers)
+    background-color: #212124;
+    color: /* king */ #dedede;
 }
 .swap_button {
     margin-left: 90px;
@@ -15,6 +17,7 @@ body {
     width: 200px;
     background-color: #ddd;
     cursor: pointer;
+    color: black;
     input {
         width: 100%;
         padding-left: 0;
