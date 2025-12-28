@@ -14,7 +14,31 @@ let stick_state_default = {
     buttons: [],
     gc: false,
 };
+const InputKind ={
+    0x0: "attack",
+    0x1: "special",
+    0x2: "jump",
+    0x3: "guard",
+    0x4: "grab",
+    0x5: "smash_attack",
+    0xA: null, // "AppealHi",
+    0xB: null, // "AppealS",
+    0xC: null, // "AppealLw",
+    0xD: null, // "Unset",
+}
+
+let map_default = {
+    x: null,
+    a: null,
+    b: null,
+    y: null,
+    l: null,
+    r: null,
+    zl: null,
+    zr: null
+}
 let stick_states = new Array(8).fill().map(()=>({...stick_state_default}));
+let maps = new Array(8).fill().map(()=>({...map_default}));
 export function start_tcp_listener(socket_handler) {
     Bun.connect({
         hostname: "127.0.0.1",
@@ -22,7 +46,7 @@ export function start_tcp_listener(socket_handler) {
 
         socket: {
             data(socket, data) {
-                console.log(data)
+                console.log(data);
                 let n = data[0];
                 if (data[0] > 7) {
                     if (data != "\n") console.log(data.toString().trim().replace("el()", "e\nl()"));
@@ -47,9 +71,28 @@ export function start_tcp_listener(socket_handler) {
 
                 // console.log(data);
                 stick_states[n].gc = data[11] == 1;
+
+                // 02 00 01 02 02 04 03 03 0a
+                // 02 00 01 02 00 04 03 03
+
+                maps[n] = {
+                    x: InputKind[data[12]],
+                    a: InputKind[data[13]],
+                    b: InputKind[data[14]],
+                    y: InputKind[data[15]],
+                    l: InputKind[data[16]],
+                    r: InputKind[data[17]],
+                    zl: InputKind[data[18]],
+                    zr: InputKind[data[19]],
+                };
+                if(n == 1) console.log(maps[1], data[17])
+                // console.log(maps[n], n)
                 socket_handler.send_all({
-                    type: "inputs", 
-                    data: stick_states
+                    type: "inputs",
+                    data: {
+                        inputs: stick_states,
+                        maps: maps,
+                    },
                 });
             },
         },

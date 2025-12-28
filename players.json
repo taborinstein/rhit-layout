@@ -48,7 +48,7 @@
         "name": "zzz",
         "prefix": "ROSE",
         "pronoun": "he/him",
-        "icon": "packun_06",
+        "icon": "mario_07",
         "flag": "us-wa",
         "year": null,
         "id": 3623340
@@ -165,7 +165,7 @@
         "name": "Excalibirb",
         "prefix": "DaD",
         "pronoun": "he/him",
-        "icon": "rosetta_00",
+        "icon": "rosetta_04",
         "flag": "us-tn",
         "year": "Y2",
         "id": 2231548
@@ -228,7 +228,7 @@
         "name": "lenoir",
         "prefix": null,
         "pronoun": "she/they",
-        "icon": "packun_07",
+        "icon": "packun_06",
         "flag": "us-tx",
         "year": "Y2",
         "id": 4317794

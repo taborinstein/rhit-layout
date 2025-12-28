@@ -6,7 +6,9 @@ svg {
     /* background: #dedede; */
     
     stroke: #ffaaaa;
+    // stroke: #aaa;
     fill: #ffdddd;
+    // fill: #ddd;
     margin-bottom: 20px;
     fill-opacity: 0;
     
@@ -38,4 +40,28 @@ svg {
 }
 svg *.filled {
     fill-opacity: 1 !important;
+}
+.input_kind_special {
+    stroke: #c92039;
+    // fill: #ca495d;
+}
+.input_kind_attack {
+    stroke: #20c996;
+    // fill: #54c4a3;
+}
+.input_kind_special {
+    stroke: #c92039;
+    // fill: #ca495d;
+}
+.input_kind_grab {
+    stroke: #4e4cb5;
+    // fill: #6261ba;
+}
+.input_kind_jump {
+    stroke: #bbb;
+}
+.input_kind_guard {
+    stroke: #777;
+    // fill-opacity: 1;
+    // fill: #888;
 }

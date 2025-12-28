@@ -1,6 +1,7 @@
 // console.log("hi")
 const input_svg = {
     gamecube: (
+        // <svg width="800" height="320" viewBox="30 20 400 160">
         <svg width="400" height="160" viewBox="30 20 400 160">
             <g transform="translate(0 10)">
                 <polygon points="100.000,150.000 135.355,135.355 150.000,100.000 135.355,64.645 100.000,50.000 64.645,64.645 50.000,100.000 64.645,135.355" />
@@ -42,6 +43,7 @@ const input_svg = {
         </svg>
     ),
     procon: (
+        // <svg width="800" height="320" viewBox="30 20 400 160">
         <svg width="400" height="160" viewBox="30 20 400 160">
             <g transform="translate(0 10)">
                 <ellipse cx="100" cy="100" rx="50" />
@@ -70,15 +72,20 @@ export default function Display(props) {
         props.update_array.push({
         player: props.player,
         func: _data => {
-            let data = _data[props.player];
+    
+            let data = _data.inputs[props.player];
+            let map = _data.maps[props.player];
             for(let button of ["a", "b", "x", "y", "zl", "zr", "l", "r"]) {
                 let db = document.querySelectorAll(`[data-button=${button}]`)[props.player];
                 if(!db) {
                     continue
                 }
-                console.log(data.rs.y)
+                db.removeAttribute("class");
+                // console.log()
+                if(map[button]) db.classList.add("input_kind_" + map[button]);
+                // console.log(data.rs.y)
                 if(data.buttons.includes(db.dataset.button)) db.classList.add("filled");
-                else db.classList.remove("filled");
+                // else db.classList.remove("filled");
             }
             document.querySelectorAll('[data-stick=l]')[props.player].setAttribute("transform", `translate(${data.ls.x / 4}, ${data.ls.y / -4})`)
             document.querySelectorAll('[data-stick=r]')[props.player].setAttribute("transform", `translate(${data.rs.x / 4}, ${data.rs.y / -4})`)
