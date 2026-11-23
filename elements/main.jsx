@@ -1,12 +1,14 @@
 import Side from "./side.jsx";
 import SAR from "./sar.jsx";
 import Center from "./center.jsx";
+import Display from "./inputs/display.jsx";
 
+let inputs_array = []
 window.onload = () => {
     ReactDOM.render(
         <>
             <div className="floating">
-                <SAR num={29} />
+                <SAR num={54} />
                 <div className="link">
                     <img src="icons/internal/twitch.svg" />
                     /rhitssb
@@ -19,28 +21,32 @@ window.onload = () => {
                     <Side />
                 </div>
             </div>
+            <div className="input_row inputs_container">
+                <Display player={0} update_array={inputs_array} />
+                <Display player={1} update_array={inputs_array} />
+            </div>
         </>,
-        document.querySelector("#root")
+        document.querySelector("#root"),
     );
     update_player(0, {
-        name: "quandale",
+        name: "Medli",
         pronoun: "she/her",
         prefix: "ROSE",
-        icon: "edge_07",
-        flag: "us-in",
-        year: "Y1",
+        icon: "younglink_03",
+        flag: "us-ny",
+        year: "Y4",
         social: null,
     });
     update_player(1, {
-        name: "ashush",
+        name: "door 2",
         pronoun: "he/him",
         prefix: null,
-        icon: "zelda_02",
-        flag: "us-nc",
-        year: "Y2",
+        icon: "pitb_02",
+        flag: "us-in",
+        year: "Y4",
         social: null,
     });
-    set_colors(["#550000", "#000044"]);
+    set_colors(["#660000", "#000066"]);
     socket.init(socket_handler);
 };
 
@@ -79,8 +85,11 @@ function socket_handler(type, message) {
                 document.querySelector("[data-identifier=game_bar]").innerText =
                     message.layout.game_bar;
                 set_colors(message.layout.colors);
-                if(message.layout.num) document.querySelector(".sar .num").innerText = message.layout.num;
+                if(message.layout.num) document.querySelector(".sar .num div").innerText = message.layout.num;
             }
+            break;
+        case "inputs":
+            inputs_array.forEach(f => f.func(message));
             break;
         case "fetch_current":
             socket.transmit("fetch_current_resp", {

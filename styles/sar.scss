@@ -1,27 +1,69 @@
 @use "fonts.scss";
+
 .sar {
+    padding-top: 2px;
     font-family: Square;
     display: inline-flex;
     flex-direction: row;
+
     .text {
         align-items: center;
         display: flex;
         flex-direction: column;
+
         div {
             display: flex;
             flex-direction: row;
             line-height: 0.8em;
+
             .char {
                 width: 0.58em;
             }
         }
+
         color: #bbb;
     }
+
     .num {
         $num_h: 2.1em;
         display: flex;
         font-size: $num_h;
         line-height: 0.8em;
         color: #ddd;
+        z-index: 2;
+        margin-left: 8px;
+        background: repeating-linear-gradient(90deg,
+                hsl(0, 78%, 57%),
+                // hsl(100, 78%, 57%),
+                hsl(200, 78%, 57%),
+                // hsl(300, 78%, 57%),
+               
+                );
+        // background-size: 200% 200%;
+        // animation: flash infinite linear 3s;
+        padding-top: 10px;
+        margin-top: -10px;
+        // background-
+        -webkit-background-clip: text;
+            background-clip: text;
+        // margin-top: -100px;
+        -webkit-text-stroke: 4px transparent;
+        // transform: scale(2) rotate(45deg);
+
+        div {
+            // transform: rotate(-45deg) scale(0.5);
+        }
+    }
+
+    @keyframes flash {
+        0% {
+            background-position-y: 0%;
+            background-position-x: 0%;
+        }
+
+        100% {
+            background-position-y: 200%;
+            background-position-x: -200%;
+        }
     }
 }

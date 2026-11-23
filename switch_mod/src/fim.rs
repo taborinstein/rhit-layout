@@ -1,3 +1,6 @@
+// this comes from the training mod repo
+#![allow(unused_parens)]
+#![allow(unused)]
 use bitflags::bitflags;
 use modular_bitfield::{bitfield, specifiers::*};
 

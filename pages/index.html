@@ -2,12 +2,20 @@
 <html>
     <head>
         <link rel="stylesheet" href="styles/main.scss" />
+        <link rel="stylesheet" href="/styles/input_display.scss" />
+        <style>
+            :root {
+                --color-l: #600;
+                --color-r: #006;
+            }
+        </style>
     </head>
-    <body>
+    <body class="zoom1">
         <script src="external/react.dev.js"></script>
         <script src="external/react-dom.dev.js"></script>
         <script src="scripts/socket.js"></script>
         <script src="elements/main.jsx" type="module"></script>
+        
         <div id="root"></div>
     </body>
 </html>

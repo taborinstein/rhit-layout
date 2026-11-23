@@ -11,14 +11,17 @@ export default class SAR extends React.Component {
                         ))}
                     </div>
                     <div>
-                        {"@ROSE".split("").map((x,i) => (
+                        {"@ROSE".split("").map((x, i) => (
                             <div key={i} className="char">
                                 {x}
                             </div> // key so react shuts up
                         ))}
                     </div>
                 </div>
-                <div className="num">#{this.props.num || "0"}</div>
+                <div className="num">
+                    {"#"}
+                    <div>{this.props.num || "0"}</div>
+                </div>
             </div>
         );
     }

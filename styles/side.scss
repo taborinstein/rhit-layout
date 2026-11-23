@@ -1,5 +1,5 @@
 $side_w: 22em;
-$under_h: 1.4em;
+$under_h: 1.5em;
 $row_h: 1.8em;
 $row_br: 5px;
 
@@ -12,91 +12,115 @@ $row_br: 5px;
 
     .row {
         height: $row_h;
+
         &:not(.reversed):nth-child(1) {
             background-color: var(--color-r);
         }
+
         &.reversed:nth-child(1) {
             background-color: var(--color-l);
         }
-        .square /* score */ {
+
+        .square
+
+        /* score */
+            {
             font-weight: bold;
             background-color: #fff1;
             border-bottom: 3px solid white;
         }
+
         .icon {
             height: 100%;
             display: flex;
             align-items: center;
+
             img {
                 height: calc($row_h * 2 / 3);
             }
         }
+
         .flag {
             $flag_h: 1.3em;
             height: 100%;
             display: flex;
             align-items: center;
+
             div {
                 height: 100%;
                 align-items: center;
                 display: flex;
+
                 img {
                     height: $flag_h;
                     margin: 0 calc(($row_h - $flag_h) * 0.5);
                 }
+
                 margin: 0 0;
                 // box-shadow: 2px 2px 3px #fff3;
             }
         }
+
         .player_name {
-            $name_gap: 0.4em;
+            $name_gap: 0.2em;
             align-items: center;
             display: inline-flex;
             gap: $name_gap;
+
             div {
                 &:nth-child(1) {
-                    font-weight: 100;
+                    font-weight: 400;
                     color: #f84a;
+
                     // font-style: italic;
                     &.nopref {
                         margin-left: -$name_gap;
                     }
                 }
+
                 &:nth-child(2) {
                     font-weight: 300;
                 }
             }
         }
     }
+
     .under {
         height: $under_h;
-        font-size: 0.75em;
+        font-size: 0.7em;
+
         &:not(.reversed) .widget {
             background-color: var(--color-r);
         }
+
         &.reversed .widget {
             background-color: var(--color-l);
         }
+
         // font-style: italic;
         margin-top: 5px;
+
         .sep {
             width: $row_h;
         }
+
         .widget {
-            padding: 0.5em;
+            padding: 0.6em;
             border-radius: $row_br;
             display: flex;
             align-items: center;
             justify-content: center;
             min-width: 3em;
+
             &.disabled {
                 display: none;
             }
+
             img {
                 filter: brightness(100000%); // wtf was i cooking here
-                height: 0.8em;
+                height: 0.9em;
                 margin-left: 0em;
-                margin-right: 0.5em;
+                margin-right: 0.3em;
             }
         }
     }

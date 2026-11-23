@@ -2,5 +2,6 @@ auth.json
 bun.lockb
 node_modules
 .cache
-tcp_client/Cargo.lock
-tcp_client/target
+tcp_client_old
+switch_mod/Cargo.lock
+switch_mod/target

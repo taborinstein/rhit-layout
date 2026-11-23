@@ -9,7 +9,7 @@ class Side extends React.Component {
                     </div>
                     <div className="player_name">
                         <div data-identifier="prefix">ROSE</div>
-                        <div data-identifier="name">Koko</div>
+                        <div data-identifier="name">Medli</div>
                     </div>
                     <div className="end flag" data-identifier="flag">
                         <div>

@@ -4,9 +4,10 @@ import babel from "@babel/core";
 import * as sass from "sass";
 import Path from "path";
 
-import {start_tcp_listener} from "./tcp_listener.js"
+// import {start_tcp_listener} from "./tcp_listener.js"
 
-import fetch_seeds from "./sgg.js";
+import fetch_seeds from "./server_scripts/sgg.js";
+import InputSocket from "./server_scripts/tcp.js";
 let auth = {};
 
 //verbose out
@@ -55,13 +56,16 @@ function is_already_built(path, new_path) {
     return fs.existsSync(new_path) && fs.lstatSync(path).mtimeMs < fs.lstatSync(new_path).mtimeMs;
 }
 function compile(path) {
-    if(!path.startsWith(__dirname)) path = Path.join(__dirname, path);
+    if (!path.startsWith(__dirname)) path = Path.join(__dirname, path);
     let ext = path.split(".").pop();
 
     // get path relative to dirname
     let relative_path = Path.relative(__dirname, path);
 
-    let new_path = Path.join(__dirname, ".cache", relative_path).replace(new RegExp(ext + "$"), compile_map[ext]);
+    let new_path = Path.join(__dirname, ".cache", relative_path).replace(
+        new RegExp(ext + "$"),
+        compile_map[ext],
+    );
     if (ext == "scss") {
         // handle @use so saving a sheet that isn't directly linked works
         let sass = fs.readFileSync(path).toString();
@@ -90,7 +94,7 @@ function compile(path) {
         case "jsx":
             fs.writeFileSync(
                 new_path,
-                babel.transformFileSync(path, { presets: ["@babel/preset-react"] }).code
+                babel.transformFileSync(path, { presets: ["@babel/preset-react"] }).code,
             );
             break;
         case "scss":
@@ -100,7 +104,12 @@ function compile(path) {
     }
     return new_path;
 }
-start_tcp_listener(sockets);
+
+let inputs = new InputSocket();
+if (process.argv.includes("--ip")) inputs.open(process.argv[process.argv.indexOf("--ip") + 1]);
+
+inputs.on("data", data => sockets.send_all(data));
+
 Bun.serve({
     port: PORT,
 
@@ -116,10 +125,11 @@ Bun.serve({
         }
 
         // custom paths
-        if (path == "/") return new Response(Bun.file("index.html"));
-        if (path == "/inputs") return new Response(Bun.file("inputs.html"));
-        if (path == "/control") return new Response(Bun.file("control.html"));
-        if (path == "/comms") return new Response(Bun.file("comms.html"));
+        if (path == "/") return new Response(Bun.file("pages/index.html"));
+        if (path == "/inputs") return new Response(Bun.file("pages/inputs.html"));
+        if (path == "/control") return new Response(Bun.file("pages/control.html"));
+        if (path == "/comms") return new Response(Bun.file("pages/comms.html"));
+        if (path.endsWith(".html")) path = "./pages" + path;
 
         // default
         return new Response(Bun.file(Path.join("./", path)));
@@ -136,7 +146,7 @@ Bun.serve({
             vo(
                 2,
                 `Recieved message: \x1b[34m${json.type}\x1b[0m` +
-                    (data ? `:\x1b[35m${JSON.stringify(data)}\x1b[0m` : "")
+                    (data ? `:\x1b[35m${JSON.stringify(data)}\x1b[0m` : ""),
             );
             switch (json.type) {
                 case "update":

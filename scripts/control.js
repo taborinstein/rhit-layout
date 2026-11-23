@@ -8,7 +8,7 @@ window.onload = () => {
             for (let i = 0; i < 8; i++) {
                 if((k == "Mii Gunner" || k == "Mii Swordfighter" || k == "Random") && i > 0) continue;
                 if((k == "Mii Brawler") && i > 1) continue;
-                new Image().src = `/icons/chara_2_${CHARA_DATA[k]}_0${i}.png`;
+                // new Image().src = `/icons/chara_2_${CHARA_DATA[k]}_0${i}.png`;
             }
     }, 1000); // preload images after 1s
     let filter = document.querySelector(".player_selector > input");
@@ -30,12 +30,14 @@ function load_player_data() {
     player_data.sort(sort_func).forEach(p => {
         let div = document.createElement("div");
         div.className = "entry";
+        let prefix = p.prefix;
+        if (prefix?.length > 7) prefix = prefix.substring(0, 5) + "...";
         if (p.guest) div.classList.add("guest");
         // this is lazy and bad
         div.setAttribute("data-data", JSON.stringify(p));
         div.innerHTML =
             `<img class="icon" src="./icons/chara_2_${p.icon}.png">` +
-            (p.prefix ? `<div class="prefix">${p.prefix}</div>` : "") +
+            (p.prefix ? `<div class="prefix">${prefix}</div>` : "") +
             `<div class="name">${p.name}</div>` +
             (p.seed ? `<div class="seed">${p.seed}</div>` : "");
 
